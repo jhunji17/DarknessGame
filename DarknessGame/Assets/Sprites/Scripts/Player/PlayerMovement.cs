@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
         if (move == false)
         {
             return;
+            move = true;
         }
 
         if (Input.GetKey(up) == true)
@@ -45,9 +46,9 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void OnTrigger2D(Collider2D col)
+    void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("Wall"))
+        if (col.gameObject.tag == "Wall")
         {
             //move = false;
             Debug.Log("Collide");
