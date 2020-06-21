@@ -4,54 +4,51 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    Rigidbody2D rigidbody;
+    private Rigidbody2D rb;
     public float moveSpeed;
+    public Vector2 moveDir;
+    
+
     [SerializeField] public KeyCode up;
     [SerializeField] public KeyCode down;
     [SerializeField] public KeyCode right;
     [SerializeField] public KeyCode left;
-    bool move = true;
+    
+
 
     private void Start()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
-
+        rb = gameObject.GetComponent<Rigidbody2D>();
     }
-
-    private void Update()
+    private void HandleMovement()
     {
-        if (move == false)
-        {
-            return;
-            move = true;
-        }
-
+        float moveX = 0f;
+        float moveY = 0f;
         if (Input.GetKey(up) == true)
         {
-            transform.position += transform.up * Time.deltaTime * moveSpeed;
+            moveY = +1f;
         }
         if (Input.GetKey(down) == true)
         {
-            transform.position -= transform.up * Time.deltaTime * moveSpeed;
-        }
+            moveY = -1f;        }
 
         if (Input.GetKey(right) == true)
         {
-            transform.position += transform.right * Time.deltaTime * moveSpeed;
+            moveX = +1f;
         }
 
         if (Input.GetKey(left) == true)
         {
-            transform.position -= transform.right * Time.deltaTime * moveSpeed;
+            moveX = -1f;
         }
+        moveDir = new Vector2(moveX,moveY).normalized;
     }
-
+    private void FixedUpdate() {
+        rb.velocity = moveDir;
+    }
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.tag == "Wall")
-        {
-            //move = false;
-            Debug.Log("Collide");
-        }
+        Debug.Log("Collide");
+        col.isTrigger = false;
     }
 }
