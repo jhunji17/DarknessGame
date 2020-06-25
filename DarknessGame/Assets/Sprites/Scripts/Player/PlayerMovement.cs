@@ -7,7 +7,6 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     public float moveSpeed;
     public Vector2 moveDir;
-    
 
     [SerializeField] public KeyCode up;
     [SerializeField] public KeyCode down;
@@ -30,7 +29,8 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetKey(down) == true)
         {
-            moveY = -1f;        }
+            moveY = -1f;    
+        }
 
         if (Input.GetKey(right) == true)
         {
@@ -41,10 +41,13 @@ public class PlayerMovement : MonoBehaviour
         {
             moveX = -1f;
         }
-        moveDir = new Vector2(moveX,moveY).normalized;
+        moveDir = new Vector2(moveX, moveY).normalized;
+        moveDir *= moveSpeed;
     }
     private void FixedUpdate() {
+        HandleMovement();
         rb.velocity = moveDir;
+        
     }
     void OnTriggerEnter2D(Collider2D col)
     {
