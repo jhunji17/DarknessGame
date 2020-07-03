@@ -115,7 +115,7 @@ MonoBehaviour:
   m_MinSize: {x: 678, y: 492}
   m_MaxSize: {x: 14001, y: 14042}
   vertical: 0
-  controlID: 2618
+  controlID: 6045
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_MinSize: {x: 403, y: 492}
   m_MaxSize: {x: 10001, y: 14042}
   vertical: 1
-  controlID: 2531
+  controlID: 6046
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_MinSize: {x: 403, y: 221}
   m_MaxSize: {x: 8003, y: 4021}
   vertical: 0
-  controlID: 2532
+  controlID: 6047
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -396,9 +396,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: d0410000
-      m_LastClickedID: 16848
-      m_ExpandedIDs: 32fbffff88410000b6410000
+      m_SelectedIDs: 98410000
+      m_LastClickedID: 16792
+      m_ExpandedIDs: 32fbffff8441000088410000b6410000d2410000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -458,9 +458,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -8.478016, y: -11.081541, z: -11.506025}
+    m_Target: {x: 9.373674, y: -5.3725624, z: -24.828033}
     speed: 2
-    m_Value: {x: -8.478016, y: -11.081541, z: -11.506025}
+    m_Value: {x: 9.373674, y: -5.3725624, z: -24.828033}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -510,9 +510,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 42.33826
+    m_Target: 19.674557
     speed: 2
-    m_Value: 42.33826
+    m_Value: 19.674557
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -666,20 +666,20 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Sprites/Environment/Background
+    - Assets/Sprites/Other Sprites
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Sprites/Environment/Background
+  - Assets/Sprites/Other Sprites
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\joshu\Projects\DarknessGame\DarknessGame\DarknessGame
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 54430000
-    m_LastClickedID: 17236
-    m_ExpandedIDs: 00000000b0400000184200001a4200001c4200004643000000ca9a3b
+    scrollPos: {x: 0, y: 8}
+    m_SelectedIDs: 2c420000
+    m_LastClickedID: 16940
+    m_ExpandedIDs: 00000000b04000001e420000204200002242000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -707,7 +707,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000b0400000184200001a4200001c42000000ca9a3b
+    m_ExpandedIDs: 00000000b04000001e420000204200002242000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -734,7 +734,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000824900001e490000000000003c9b00007ca00000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -826,7 +826,7 @@ MonoBehaviour:
     m_PrefName: Preview_InspectorPreview
   m_PreviewWindow: {fileID: 0}
   m_LastInspectedObjectInstanceID: -1
-  m_LastVerticalScrollValue: 0
+  m_LastVerticalScrollValue: 444
 --- !u!114 &20
 MonoBehaviour:
   m_ObjectHideFlags: 52

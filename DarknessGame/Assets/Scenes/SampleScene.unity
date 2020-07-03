@@ -709,7 +709,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -817,8 +817,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1359544141}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -87.4, y: 3.8, z: 0}
-  m_LocalScale: {x: 96.60218, y: 99.18272, z: 14.236352}
+  m_LocalPosition: {x: -4.8, y: 4.1, z: 0}
+  m_LocalScale: {x: 44.074684, y: 45.97758, z: 14.236352}
   m_Children: []
   m_Father: {fileID: 453632132}
   m_RootOrder: 0
@@ -981,6 +981,7 @@ GameObject:
   - component: {fileID: 2140007485}
   - component: {fileID: 2140007486}
   - component: {fileID: 2140007487}
+  - component: {fileID: 2140007489}
   m_Layer: 0
   m_Name: wall
   m_TagString: Wall
@@ -996,8 +997,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2140007484}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.3, y: 4.6, z: 0}
-  m_LocalScale: {x: 40.691742, y: 42.296856, z: 13.821698}
+  m_LocalPosition: {x: -0.2, y: -3.9, z: 0}
+  m_LocalScale: {x: 40.796806, y: 46.014168, z: 13.821698}
   m_Children: []
   m_Father: {fileID: 1141471725}
   m_RootOrder: 0
@@ -1371,3 +1372,15 @@ PolygonCollider2D:
       - {x: -5.98, y: 2.35}
       - {x: -5.96, y: 3.1}
       - {x: -5.93, y: 3.73}
+--- !u!114 &2140007489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2140007484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 389621a05abef674cb08b1769f176d92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
