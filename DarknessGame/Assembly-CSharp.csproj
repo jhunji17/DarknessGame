@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Sprites\Scripts\Player\PlayerMovement.cs" />
+    <Compile Include="Assets\Sprites\Scripts\Walls\WallBlocker.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.0f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
