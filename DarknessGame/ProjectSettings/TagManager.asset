@@ -7,6 +7,7 @@ TagManager:
   - Player1
   - Wall
   - Player2
+  - Gem
   layers:
   - Default
   - TransparentFX
@@ -49,4 +50,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 3194795717
+    locked: 0
+  - name: New Layer
+    uniqueID: 1782941581
     locked: 0

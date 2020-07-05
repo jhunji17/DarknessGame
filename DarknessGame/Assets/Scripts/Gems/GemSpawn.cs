@@ -12,8 +12,6 @@ public class GemSpawn : MonoBehaviour
     {
         float height = Camera.main.orthographicSize;
         float width = height * Camera.main.aspect;
-        //Debug.Log(height);
-        //Debug.Log(width);
         
 
         for (int i = 0; i < numberOfGems; i++)

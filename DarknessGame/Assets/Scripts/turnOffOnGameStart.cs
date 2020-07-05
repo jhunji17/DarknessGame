@@ -5,7 +5,7 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 public class turnOffOnGameStart : MonoBehaviour
 {
-
+    public bool testing;
     public Light2D mylight;
     // Start is called before the first frame update
     void Start()
@@ -16,6 +16,10 @@ public class turnOffOnGameStart : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        mylight.intensity = 0;
+        if (!testing)
+        {
+            mylight.intensity = 0;
+        }
+        
     }
 }
