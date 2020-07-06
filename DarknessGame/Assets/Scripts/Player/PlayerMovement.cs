@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     private bool destroy = false;
     private float height;
     private float width;
+    private Vector2 positionBound;
 
     [SerializeField] public KeyCode up;
     [SerializeField] public KeyCode down;
@@ -39,38 +40,43 @@ public class PlayerMovement : MonoBehaviour
     {
         float moveX = 0f;
         float moveY = 0f;
-        if (Input.GetKey(up) == true)
+        
+        if (rb.position.x < -width || rb.position.x > width || rb.position.y < -height || rb.position.y > height)
         {
-            moveY = +1f;
-        }
-        if (Input.GetKey(down) == true)
-        {
-            moveY = -1f;    
+            KeepWithinBoundary();
         }
 
-        if (Input.GetKey(right) == true)
+        else
         {
-            moveX = +1f;
-        }
-
-        if (Input.GetKey(left) == true)
-        {
-            moveX = -1f;
-        }
-
-        if (rb.position.x < -width && rb.position.x > width)
-        {
-            if (rb.position.y < -height && rb.position.y > height)
+            if (Input.GetKey(up) == true)
             {
-                transform.position = rb.position;
+                moveY = +1f;
+            }
+            if (Input.GetKey(down) == true)
+            {
+                moveY = -1f;
+            }
+
+            if (Input.GetKey(right) == true)
+            {
+                moveX = +1f;
+            }
+
+            if (Input.GetKey(left) == true)
+            {
+                moveX = -1f;
             }
         }
+
         moveDir = new Vector2(moveX, moveY).normalized;
         moveDir *= moveSpeed;
     }
-    private void FixedUpdate() {
+    private void FixedUpdate() 
+    {
+        positionBound = transform.position;
         HandleMovement();
-        rb.velocity = moveDir;       
+        rb.velocity = moveDir;
+        Debug.Log(rb.position.x);
     }
     void OnTriggerStay2D(Collider2D col)
     {
@@ -90,5 +96,27 @@ public class PlayerMovement : MonoBehaviour
         dug = false;      
     }
     
-
+    private void KeepWithinBoundary()
+    {
+        if (rb.position.x < -width)
+        {
+            positionBound.x = -width;
+            transform.position = positionBound;
+        }
+        if (rb.position.x > width)
+        {
+            positionBound.x = width;
+            transform.position = positionBound;
+        }
+        if (rb.position.y < -height)
+        {
+            positionBound.y = -height;
+            transform.position = positionBound;
+        }
+        if (rb.position.y > height)
+        {
+            positionBound.y = height;
+            transform.position = positionBound;
+        }
+    }
 }
