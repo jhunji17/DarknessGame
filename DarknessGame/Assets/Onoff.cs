@@ -8,7 +8,7 @@ public class Onoff : MonoBehaviour
     [SerializeField] public GameObject player;
     private Transform myPos;
     [SerializeField] public KeyCode control;
-    private bool on;
+    public bool on;
     private Light2D light;
     // Start is called before the first frame update
     void Start()

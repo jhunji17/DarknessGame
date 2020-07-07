@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class enemyAi : MonoBehaviour
 {
+
+
     public Transform target;
+    public Light targets;
 
     public float speed = 200f;
     public float nextWaypointDistance = 3f;
@@ -75,6 +79,10 @@ public class enemyAi : MonoBehaviour
         }
 
 
+
+    }
+
+    void GetTarget(Transform[] targets){
 
     }
 }
