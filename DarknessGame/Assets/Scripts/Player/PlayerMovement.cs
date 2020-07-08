@@ -76,13 +76,6 @@ public class PlayerMovement : MonoBehaviour
             }           
     }
 
-    
-    
-
-    
-
-   
-
     IEnumerator CheckCompletedDig(Vector2 startpos){
         Debug.Log("here1");
         yield return new WaitForSeconds(digTime);
