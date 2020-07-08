@@ -6,10 +6,11 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 public class enemyAi : MonoBehaviour
 {
-
+    public Light2D redTarget;
+    public Light2D blueTarget;
 
     public Transform target;
-    public Light targets;
+    
 
     public float speed = 200f;
     public float nextWaypointDistance = 3f;
@@ -82,7 +83,7 @@ public class enemyAi : MonoBehaviour
 
     }
 
-    void GetTarget(Transform[] targets){
-
+    void GetTarget(){
+        if()
     }
 }

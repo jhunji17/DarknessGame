@@ -36,6 +36,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\GemScript.cs" />
      <Compile Include="Assets\Onoff.cs" />
      <Compile Include="Assets\Scripts\Gems\GemSpawn.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
