@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
     public int score;
     public float moveSpeed;
     public bool isRed;
+    public bool PassDig = false;
+    public Light2D light;
     
 
     [SerializeField] public KeyCode up;
@@ -19,10 +22,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] public KeyCode right;
     [SerializeField] public KeyCode left;
     [SerializeField] public KeyCode dig;
+    [SerializeField] public KeyCode lightOn;
 
-    private enum State {idle, running, digging}
-    private State state = State.idle;
+    private enum actionState {idle, running, digging};
+    private enum lightState  {lit, dark};
 
+    private actionState astate = actionState.idle;
+    private lightState lstate =  lightState.lit;
     
     public static event Action<bool, Vector2> OnSuccessfulDig;
     
@@ -36,55 +42,84 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
-        handleInputs();
+        handleMovement();
         
         
     }
 
-    private void handleInputs()
-    {
+
+    private void Update(){
+        checkpassdig();
+        handleOther();
+        handleLighting();
+        
+
+    }
+
+    private void handleMovement(){       
             
             if (Input.GetKey(up) == true)
             {
-                state = State.running;
+                astate = actionState.running;
+                //fix this it shoudl be a straight addition
                 rb.position += (Vector2)transform.up * Time.deltaTime * moveSpeed;
             }
             if (Input.GetKey(down) == true)
             {
-                state = State.running;
+                astate = actionState.running;
                 rb.position -= (Vector2)transform.up * Time.deltaTime * moveSpeed;
             }
 
             if (Input.GetKey(right) == true)
             {
-                state = State.running;
+                astate = actionState.running;
                 rb.position += (Vector2)transform.right * Time.deltaTime * moveSpeed;
             }
 
             if (Input.GetKey(left) == true)
             {
-                state = State.running;
+                astate = actionState.running;
                 rb.position -= (Vector2)transform.right * Time.deltaTime * moveSpeed;
+            }   
+    }
+
+    private void handleLighting(){
+        if(lstate == lightState.dark){
+            light.intensity = 0;
+        } else {
+            light.intensity = 2;
+        }
+    }
+
+    private void handleOther(){
+
+            if(Input.GetKeyDown(lightOn)){
+                if(lstate == lightState.lit){
+                    lstate = lightState.dark;
+                } else {
+                    lstate = lightState.lit;
+                }
             }
 
             if(Input.GetKey(dig) == true){
-                state = State.digging;
-                
+                astate = actionState.digging;
+                PassDig = true;
                 StartCoroutine(CheckCompletedDig(rb.position));
-                
-            }           
+            }
+    }
+
+    public void checkpassdig(){
+        Debug.Log("here1");
+        if(astate != actionState.digging || lstate != lightState.lit){
+            PassDig = false;
+        }
     }
 
     IEnumerator CheckCompletedDig(Vector2 startpos){
-        Debug.Log("here1");
         yield return new WaitForSeconds(digTime);
-        Debug.Log("here2");
-        if(startpos == rb.position){
-            Debug.Log("here3");
+        if(PassDig){
             if(OnSuccessfulDig != null){
                 OnSuccessfulDig(isRed,rb.position);
-                Debug.Log("successfuldig");
             }
         }
     }

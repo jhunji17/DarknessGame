@@ -8,23 +8,19 @@ public class Timer : MonoBehaviour
 {
     public Text text;
     // replace this with the actual thing
-    private bool gameOver = false;
+    private float currentTime = 0f;
+    private float startingTime = 180f;
 
     private void Start()
     {
         text = GetComponent<Text>();
+        currentTime = startingTime;
     }
 
     private void Update()
     {
-        if (gameOver == false)
-        {
-            text.text = "Time: " + Time.time.ToString("F1");
-        }
-
-        else
-        {
-            
-        }
+        currentTime -= 1 * Time.deltaTime;
+        text.text = "Time: " + currentTime.ToString ("0");
+        
     }
 }

@@ -1,18 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class GemScript : MonoBehaviour
 {
-
+    private int value = 1;
     private Transform pos;
     private SpriteRenderer sprite;
 
-    public delegate void RedScored();
-    public static event RedScored OnRedScored;
 
-    public delegate void BlueScored();
-    public static event BlueScored OnBlueScored;
+    public static event Action<bool, Vector2, int> onGemDug;
 
 
     void Start()
@@ -36,22 +34,10 @@ public class GemScript : MonoBehaviour
         if (Vector2.Distance(pos.position, playerPos) <= 1)
         {
             Destroy(sprite);
-            if (redPlayer == true)
+            if(onGemDug != null)
             {
-                // redplayer scored event
-                if(OnRedScored != null)
-                {
-                    OnRedScored();
-                }
+                onGemDug(redPlayer,pos.position, value);
             }
-            else
-            {
-                // blueplayer scored event
-                if(OnBlueScored != null)
-                {
-                    OnBlueScored();
-                }
-            }        
             Destroy(this);
         }
     }

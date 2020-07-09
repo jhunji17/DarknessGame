@@ -5,7 +5,7 @@ using UnityEngine;
 public class GemSpawn : MonoBehaviour
 {
     public GameObject Gem;
-    public int numberOfGems;
+    public int initialNumberOfGems = 10;
     Vector2 spawnLocation;
 
     private void Start()
@@ -14,7 +14,7 @@ public class GemSpawn : MonoBehaviour
         float width = height * Camera.main.aspect;
         
 
-        for (int i = 0; i < numberOfGems; i++)
+        for (int i = 0; i < initialNumberOfGems; i++)
         {
             float RandomX = Random.Range(-width, width);
             float RandomY = Random.Range(-height, height);
