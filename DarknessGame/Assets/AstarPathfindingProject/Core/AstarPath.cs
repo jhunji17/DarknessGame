@@ -850,6 +850,8 @@ public class AstarPath : VersionedMonoBehaviour {
 	/// See: PathProcessor.TickNonMultithreaded
 	/// See: PathReturnQueue.ReturnPaths
 	/// </summary>
+	/// 
+	private bool scanAgain = true;
 	private void Update () {
 		// This class uses the [ExecuteInEditMode] attribute
 		// So Update is called even when not playing
@@ -869,6 +871,13 @@ public class AstarPath : VersionedMonoBehaviour {
 
 		// Return calculated paths
 		pathReturnQueue.ReturnPaths(true);
+
+		
+		if (scanAgain)
+		{
+			Scan();
+			scanAgain = false;
+		}
 	}
 
 	private void PerformBlockingActions (bool force = false) {
@@ -1255,6 +1264,7 @@ public class AstarPath : VersionedMonoBehaviour {
 			Scan();
 		}
 	}
+
 
 	/// <summary>Initializes the <see cref="pathProcessor"/> field</summary>
 	void InitializePathProcessor () {
