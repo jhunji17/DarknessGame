@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\GemScript.cs" />
+    <Compile Include="Assets\PlayerCombat.cs" />
     <Compile Include="Assets\Score.cs" />
     <Compile Include="Assets\Scripts\Gems\GemSpawn.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />

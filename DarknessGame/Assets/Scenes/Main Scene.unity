@@ -841,7 +841,7 @@ GameObject:
   - component: {fileID: 730876340}
   - component: {fileID: 730876339}
   - component: {fileID: 730876341}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: red
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -967,6 +967,7 @@ MonoBehaviour:
   isRed: 1
   PassDig: 0
   light: {fileID: 1832182759}
+  animator: {fileID: 0}
   up: 119
   down: 115
   right: 100
@@ -1047,6 +1048,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 800616148}
   m_CullTransparentMesh: 0
+--- !u!1 &915176085
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 915176086}
+  m_Layer: 0
+  m_Name: Attacker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &915176086
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 915176085}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.6500002, y: 0.2300002, z: 0}
+  m_LocalScale: {x: 1, y: 0.91, z: 1}
+  m_Children: []
+  m_Father: {fileID: 943094569}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &943094568
 GameObject:
   m_ObjectHideFlags: 0
@@ -1060,6 +1091,8 @@ GameObject:
   - component: {fileID: 943094572}
   - component: {fileID: 943094571}
   - component: {fileID: 943094573}
+  - component: {fileID: 943094575}
+  - component: {fileID: 943094574}
   m_Layer: 0
   m_Name: blue
   m_TagString: Player1
@@ -1077,7 +1110,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.36, y: -0.18, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 915176086}
   m_Father: {fileID: 1282514636}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1186,12 +1220,51 @@ MonoBehaviour:
   isRed: 0
   PassDig: 0
   light: {fileID: 705910253}
+  animator: {fileID: 943094574}
   up: 273
   down: 274
   right: 275
   left: 276
   dig: 303
   lightOn: 305
+--- !u!95 &943094574
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 943094568}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 543ec2de10e06c04cb1fbf105e385d07, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &943094575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 943094568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d88c17015826d7468e528affadb914d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 943094574}
+  attackPoint: {fileID: 915176086}
+  attackRange: 0.47
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  attackKey: 108
 --- !u!1 &1093353416
 GameObject:
   m_ObjectHideFlags: 0
@@ -1495,7 +1568,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1282514635}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 12.67, y: -8.85, z: 0}
+  m_LocalPosition: {x: 14.43, y: -8.85, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 943094569}
@@ -2171,7 +2244,7 @@ MonoBehaviour:
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
     cacheStartup: 0
-  showNavGraphs: 1
+  showNavGraphs: 0
   showUnwalkableNodes: 1
   debugMode: 0
   debugFloor: 0

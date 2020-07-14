@@ -15,7 +15,9 @@ public class PlayerMovement : MonoBehaviour
     public bool isRed;
     public bool PassDig = false;
     public Light2D light;
-    
+
+    public Animator animator;
+
 
     [SerializeField] public KeyCode up;
     [SerializeField] public KeyCode down;
@@ -31,6 +33,9 @@ public class PlayerMovement : MonoBehaviour
     private lightState lstate =  lightState.lit;
     
     public static event Action<bool, Vector2> OnSuccessfulDig;
+
+    private Vector2 currentPos;
+    private Vector2 prevPos;
     
 
     private void Start()
@@ -41,9 +46,11 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void FixedUpdate()
-    {
+    {      
+        prevPos = rb.position;
         handleMovement();
-        
+        currentPos = rb.position;
+        HandleRunningAnimation();
         
     }
 
@@ -51,36 +58,51 @@ public class PlayerMovement : MonoBehaviour
     private void Update(){
         checkpassdig();
         handleOther();
-        handleLighting();
-        
+        handleLighting();      
+    }
+
+    private void handleMovement()
+    {
+        if (Input.GetKey(up) == true)
+        {
+            astate = actionState.running;
+            //fix this it shoudl be a straight addition
+            rb.position += (Vector2)transform.up * Time.deltaTime * moveSpeed;
+        }
+        if (Input.GetKey(down) == true)
+        {
+            astate = actionState.running;
+            rb.position -= (Vector2)transform.up * Time.deltaTime * moveSpeed;
+        }
+
+        if (Input.GetKey(right) == true)
+        {
+            astate = actionState.running;
+            rb.position += (Vector2)transform.right * Time.deltaTime * moveSpeed;
+        }
+
+        if (Input.GetKey(left) == true)
+        {
+            astate = actionState.running;
+            rb.position -= (Vector2)transform.right * Time.deltaTime * moveSpeed;
+            
+        }
 
     }
 
-    private void handleMovement(){       
-            
-            if (Input.GetKey(up) == true)
-            {
-                astate = actionState.running;
-                //fix this it shoudl be a straight addition
-                rb.position += (Vector2)transform.up * Time.deltaTime * moveSpeed;
-            }
-            if (Input.GetKey(down) == true)
-            {
-                astate = actionState.running;
-                rb.position -= (Vector2)transform.up * Time.deltaTime * moveSpeed;
-            }
+    public void HandleRunningAnimation()
+    {
+        if(prevPos != currentPos)
+        {
+            animator.SetBool("isMoving", true);
+            return;
+        }
 
-            if (Input.GetKey(right) == true)
-            {
-                astate = actionState.running;
-                rb.position += (Vector2)transform.right * Time.deltaTime * moveSpeed;
-            }
-
-            if (Input.GetKey(left) == true)
-            {
-                astate = actionState.running;
-                rb.position -= (Vector2)transform.right * Time.deltaTime * moveSpeed;
-            }   
+        else
+        {
+            animator.SetBool("isMoving", false);
+        }
+        
     }
 
     private void handleLighting(){
