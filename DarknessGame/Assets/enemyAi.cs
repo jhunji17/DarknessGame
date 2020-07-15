@@ -6,10 +6,10 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 public class enemyAi : MonoBehaviour
 {
-    public Light2D redTarget;
-    public Light2D blueTarget;
+    [SerializeField] public PlayerMovement redTarget;
+    [SerializeField] public PlayerMovement blueTarget;
 
-    public Transform target;
+    
     
 
     public float speed = 200f;
@@ -27,16 +27,16 @@ public class enemyAi : MonoBehaviour
     {
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
-
-
         InvokeRepeating("UpdatePath", 0f, 0.5f);
+
+        
         
     }
 
     void UpdatePath()
     {
         if(seeker.IsDone()){
-            seeker.StartPath(rb.position, target.position, OnPathComplete);
+            seeker.StartPath(rb.position, getTarget(redTarget,blueTarget).position, OnPathComplete);
         }
         
 
@@ -83,7 +83,9 @@ public class enemyAi : MonoBehaviour
 
     }
 
-    void GetTarget(){
-        
+    private Transform getTarget(PlayerMovement red, PlayerMovement blue){
+        if(red.lstate == lightState.){
+
+        }
     }
 }

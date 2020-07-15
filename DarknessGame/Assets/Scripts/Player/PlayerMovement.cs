@@ -26,11 +26,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] public KeyCode dig;
     [SerializeField] public KeyCode lightOn;
 
-    private enum actionState {idle, running, digging};
-    private enum lightState  {lit, dark};
+    public enum actionState {idle, running, digging};
+    public enum lightState  {lit, dark};
 
-    private actionState astate = actionState.idle;
-    private lightState lstate =  lightState.lit;
+    public actionState astate = actionState.idle;
+    public lightState lstate =  lightState.lit;
     
     public static event Action<bool, Vector2> OnSuccessfulDig;
 
@@ -131,7 +131,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void checkpassdig(){
-        Debug.Log("here1");
+        
         if(astate != actionState.digging || lstate != lightState.lit){
             PassDig = false;
         }
