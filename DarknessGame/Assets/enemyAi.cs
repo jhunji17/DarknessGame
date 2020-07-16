@@ -36,7 +36,7 @@ public class enemyAi : MonoBehaviour
     void UpdatePath()
     {
         if(seeker.IsDone()){
-            seeker.StartPath(rb.position, getTarget(redTarget,blueTarget).position, OnPathComplete);
+            seeker.StartPath(rb.position, getTarget(redTarget,blueTarget), OnPathComplete);
         }
         
 
@@ -83,9 +83,21 @@ public class enemyAi : MonoBehaviour
 
     }
 
-    private Transform getTarget(PlayerMovement red, PlayerMovement blue){
-        if(red.lstate == lightState.){
-
+    private Vector2 getTarget(PlayerMovement red, PlayerMovement blue){
+        if(red.lstate == PlayerMovement.lightState.lit && blue.lstate == PlayerMovement.lightState.dark){
+                return red.transform.position;
+        } 
+        else if (red.lstate == PlayerMovement.lightState.dark && blue.lstate == PlayerMovement.lightState.lit){
+            return blue.transform.position;
+        }
+        else if(red.lstate == PlayerMovement.lightState.lit && blue.lstate == PlayerMovement.lightState.lit){
+            if(Vector2.Distance(rb.position,red.transform.position) <= Vector2.Distance(rb.position,blue.transform.position)){
+                return red.transform.position;
+            } else {
+                return blue.transform.position;
+            }
+        } else {
+            return new Vector2(-2,-4);
         }
     }
 }
