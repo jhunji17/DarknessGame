@@ -25,18 +25,23 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] public KeyCode left;
     [SerializeField] public KeyCode dig;
     [SerializeField] public KeyCode lightOn;
+    [SerializeField] public KeyCode attackKey;
 
+    public GameObject attackPoint;
+    public float attackRange = 0.5f;
+    public LayerMask playerLayer;
+
+    private enum actionState {idle, running, digging, attacking};
+    private enum lightState  {lit, dark};
     public enum actionState {idle, running, digging};
     public enum lightState  {lit, dark};
 
+    private actionState aState = actionState.idle;
+    private lightState lState =  lightState.lit;
     public actionState astate = actionState.idle;
     public lightState lstate =  lightState.lit;
     
     public static event Action<bool, Vector2> OnSuccessfulDig;
-
-    private Vector2 currentPos;
-    private Vector2 prevPos;
-    
 
     private void Start()
     {
@@ -47,66 +52,58 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {      
-        prevPos = rb.position;
-        handleMovement();
-        currentPos = rb.position;
-        HandleRunningAnimation();
-        
+        handleMovement();       
     }
 
 
     private void Update(){
         checkpassdig();
+        HandleAttackBoxMovement();
         handleOther();
-        handleLighting();      
+        handleLighting();
+        HandleAnimation();
     }
 
     private void handleMovement()
     {
-        if (Input.GetKey(up) == true)
+        bool called = false;
+
+        if (Input.GetKey(up))
         {
-            astate = actionState.running;
-            //fix this it shoudl be a straight addition
+            aState = actionState.running;
+            //fix this it shoudl be a straight addition  
             rb.position += (Vector2)transform.up * Time.deltaTime * moveSpeed;
+            called = true;
         }
-        if (Input.GetKey(down) == true)
+        if (Input.GetKey(down))
         {
-            astate = actionState.running;
+            aState = actionState.running;
             rb.position -= (Vector2)transform.up * Time.deltaTime * moveSpeed;
+            called = true;
         }
 
-        if (Input.GetKey(right) == true)
+        if (Input.GetKey(right))
         {
-            astate = actionState.running;
+            aState = actionState.running;
             rb.position += (Vector2)transform.right * Time.deltaTime * moveSpeed;
+            called = true;
         }
 
-        if (Input.GetKey(left) == true)
+        if (Input.GetKey(left))
         {
-            astate = actionState.running;
+            aState = actionState.running;
             rb.position -= (Vector2)transform.right * Time.deltaTime * moveSpeed;
-            
+            called = true;
         }
 
-    }
-
-    public void HandleRunningAnimation()
-    {
-        if(prevPos != currentPos)
+        if (called == false)
         {
-            animator.SetBool("isMoving", true);
-            return;
+            aState = actionState.idle;
         }
-
-        else
-        {
-            animator.SetBool("isMoving", false);
-        }
-        
     }
 
     private void handleLighting(){
-        if(lstate == lightState.dark){
+        if(lState == lightState.dark){
             light.intensity = 0;
         } else {
             light.intensity = 2;
@@ -115,22 +112,48 @@ public class PlayerMovement : MonoBehaviour
 
     private void handleOther(){
 
-            if(Input.GetKeyDown(lightOn)){
-                if(lstate == lightState.lit){
-                    lstate = lightState.dark;
-                } else {
-                    lstate = lightState.lit;
-                }
+        if (Input.GetKeyDown(lightOn))
+        {
+            if (lState == lightState.lit)
+            {
+                lState = lightState.dark;
             }
+            else
+            {
+                lState = lightState.lit;
+            }
+        }
 
-            if(Input.GetKey(dig) == true){
-                astate = actionState.digging;
-                PassDig = true;
-                StartCoroutine(CheckCompletedDig(rb.position));
+        if (Input.GetKey(dig) == true)
+        {
+            aState = actionState.digging;
+            PassDig = true;
+            StartCoroutine(CheckCompletedDig(rb.position));
+        }
+
+        if (Input.GetKeyDown(attackKey))
+        {
+            aState = actionState.attacking;
+            Attack();
+            if (Input.GetKeyUp(attackKey))
+            {
+                aState = actionState.idle;
             }
+        }
+    }
+
+    void Attack()
+    {    
+        Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackRange, playerLayer);
+
+        foreach (Collider2D enemy in hitPlayer)
+        {
+            Debug.Log(enemy.name + "GOT HIT");
+        }
     }
 
     public void checkpassdig(){
+        if(aState != actionState.digging || lState != lightState.lit){
         
         if(astate != actionState.digging || lstate != lightState.lit){
             PassDig = false;
@@ -139,6 +162,7 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator CheckCompletedDig(Vector2 startpos){
         yield return new WaitForSeconds(digTime);
+        aState = actionState.idle;
         if(PassDig){
             if(OnSuccessfulDig != null){
                 OnSuccessfulDig(isRed,rb.position);
@@ -146,9 +170,66 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    
-   
+    private void OnDrawGizmosSelected()
+    {
+        if (attackPoint == null)
+        {
+            return;
+        }
 
-    
-    
+        Gizmos.DrawWireSphere(attackPoint.transform.position, attackRange);
+    }
+
+    public void HandleAnimation()
+    {
+        if (aState == actionState.running)
+        {
+            animator.SetBool("isMoving", true);
+        }
+
+        else if (aState == actionState.digging)
+        {
+            // need some sort of diggin animation here
+            // animator.SetTrigger("digging");
+        }
+
+        else if (aState == actionState.attacking)
+        {
+            animator.SetTrigger("attack");
+        }
+
+        else
+        {
+            //should automatically return to idle
+            animator.SetBool("isMoving", false);
+        }      
+    }
+
+    private void HandleAttackBoxMovement()
+    {
+        Vector2 newPos = new Vector2();
+
+        if (Input.GetKey(up))
+        {
+            newPos = new Vector2(0, 1);
+            attackPoint.transform.localPosition = newPos;
+        }
+        if (Input.GetKey(down))
+        {
+            newPos = new Vector2(0, -1);
+            attackPoint.transform.localPosition = newPos;
+        }
+
+        if (Input.GetKey(right))
+        {
+            newPos = new Vector2(1, 0);
+            attackPoint.transform.localPosition = newPos;
+        }
+
+        if (Input.GetKey(left))
+        {
+            newPos = new Vector2(-1, 0);
+            attackPoint.transform.localPosition = newPos;
+        }
+    }
 }

@@ -6,7 +6,7 @@ public class PlayerCombat : MonoBehaviour
 {
 
     public Animator animator;
-    public Transform attackPoint;
+    public GameObject attackPoint;
     public float attackRange = 0.5f;
     public LayerMask playerLayer;
 
@@ -23,7 +23,7 @@ public class PlayerCombat : MonoBehaviour
     {
         animator.SetTrigger("attack");
 
-        Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, playerLayer);
+        Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackRange, playerLayer);
 
         foreach(Collider2D enemy in hitPlayer)
         {
@@ -38,6 +38,6 @@ public class PlayerCombat : MonoBehaviour
             return;
         }
 
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        Gizmos.DrawWireSphere(attackPoint.transform.position, attackRange);
     }
 }

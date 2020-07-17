@@ -1111,6 +1111,12 @@ MonoBehaviour:
   lightOn: 113
   astate: 0
   lstate: 0
+  attackKey: 0
+  attackPoint: {fileID: 0}
+  attackRange: 0.5
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &800616148
 GameObject:
   m_ObjectHideFlags: 0
@@ -1209,7 +1215,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 915176085}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.6500002, y: 0.2300002, z: 0}
+  m_LocalPosition: {x: 0.06, y: 0.08, z: 0}
   m_LocalScale: {x: 1, y: 0.91, z: 1}
   m_Children: []
   m_Father: {fileID: 943094569}
@@ -1228,7 +1234,6 @@ GameObject:
   - component: {fileID: 943094572}
   - component: {fileID: 943094571}
   - component: {fileID: 943094573}
-  - component: {fileID: 943094575}
   - component: {fileID: 943094574}
   m_Layer: 0
   m_Name: blue
@@ -1366,6 +1371,12 @@ MonoBehaviour:
   lightOn: 305
   astate: 0
   lstate: 0
+  attackKey: 108
+  attackPoint: {fileID: 915176085}
+  attackRange: 0.5
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!95 &943094574
 Animator:
   serializedVersion: 3
@@ -1385,25 +1396,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &943094575
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 943094568}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d88c17015826d7468e528affadb914d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 943094574}
-  attackPoint: {fileID: 915176086}
-  attackRange: 0.47
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  attackKey: 108
 --- !u!1 &1093353416
 GameObject:
   m_ObjectHideFlags: 0
@@ -1468,7 +1460,7 @@ MonoBehaviour:
     m_BestFit: 1
     m_MinSize: 10
     m_MaxSize: 97
-    m_Alignment: 0
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -1911,7 +1903,7 @@ MonoBehaviour:
     m_BestFit: 1
     m_MinSize: 10
     m_MaxSize: 97
-    m_Alignment: 0
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -1990,7 +1982,7 @@ MonoBehaviour:
     m_BestFit: 1
     m_MinSize: 10
     m_MaxSize: 97
-    m_Alignment: 0
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0

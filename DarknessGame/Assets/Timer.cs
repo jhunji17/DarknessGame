@@ -19,8 +19,16 @@ public class Timer : MonoBehaviour
 
     private void Update()
     {
-        currentTime -= 1 * Time.deltaTime;
-        text.text = "Time: " + currentTime.ToString ("0");
-        
+        if (currentTime > 0)
+        {
+            currentTime -= 1 * Time.deltaTime;
+            text.text = "Time: " + currentTime.ToString("0");
+        }
+
+        else
+        {
+            // game over event occurs here - I think we need to do a GameManager for this - idk
+
+        }       
     }
 }

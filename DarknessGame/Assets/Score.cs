@@ -6,8 +6,6 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Text))]
 public class Score : MonoBehaviour
 {
-    
-
     public Text scoreText;
     private int score;
     [SerializeField] private bool redPlayer;
