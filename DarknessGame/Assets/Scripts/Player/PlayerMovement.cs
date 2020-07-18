@@ -52,14 +52,13 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    private void Update(){
-        
+    private void Update(){   
         HandleAttackBoxMovement();
         checkpassdig();
         handleOther();
         
         handleLighting();
-     //   HandleAnimation();
+        //animator.SetInteger("aState", (int)aState);
     }
 
     private void handleMovement()
@@ -142,6 +141,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey(dig) == true && aState == actionState.idle)
         {
+            //Debug.Log("gOT HERE");
             aState = actionState.digging;
             PassDig = true;
             StartCoroutine(CheckCompletedDig(rb.position));
@@ -152,12 +152,8 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(attackKey))
         {
             aState = actionState.attacking;
+            animator.SetInteger("aState", (int)aState);
             Attack();
-            // if (Input.GetKeyUp(attackKey))
-            // {
-            //     aState = actionState.idle;
-            // }
-            
         }
         
         
@@ -181,11 +177,11 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator CheckCompletedDig(Vector2 startpos){
         yield return new WaitForSeconds(digTime);
-        //aState = actionState.idle;
-        if(PassDig){
-            if(OnSuccessfulDig != null){
+        if(PassDig && aState == actionState.digging && rb.position == startpos){
+            aState = actionState.idle;
+            if (OnSuccessfulDig != null){
                 OnSuccessfulDig(isRed,rb.position);
-                aState = actionState.idle;
+                
             }
         }
     }
