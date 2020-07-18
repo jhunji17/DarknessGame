@@ -84,13 +84,13 @@ public class enemyAi : MonoBehaviour
     }
 
     private Vector2 getTarget(PlayerMovement red, PlayerMovement blue){
-        if(red.lstate == PlayerMovement.lightState.lit && blue.lstate == PlayerMovement.lightState.dark){
+        if(red.lState == PlayerMovement.lightState.lit && blue.lState == PlayerMovement.lightState.dark){
                 return red.transform.position;
         } 
-        else if (red.lstate == PlayerMovement.lightState.dark && blue.lstate == PlayerMovement.lightState.lit){
+        else if (red.lState == PlayerMovement.lightState.dark && blue.lState == PlayerMovement.lightState.lit){
             return blue.transform.position;
         }
-        else if(red.lstate == PlayerMovement.lightState.lit && blue.lstate == PlayerMovement.lightState.lit){
+        else if(red.lState == PlayerMovement.lightState.lit && blue.lState == PlayerMovement.lightState.lit){
             if(Vector2.Distance(rb.position,red.transform.position) <= Vector2.Distance(rb.position,blue.transform.position)){
                 return red.transform.position;
             } else {
@@ -100,4 +100,6 @@ public class enemyAi : MonoBehaviour
             return new Vector2(-2,-4);
         }
     }
+
+    
 }

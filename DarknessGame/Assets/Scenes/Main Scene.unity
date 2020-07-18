@@ -1067,7 +1067,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!58 &730876340
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1109,14 +1109,14 @@ MonoBehaviour:
   left: 97
   dig: 101
   lightOn: 113
-  astate: 0
-  lstate: 0
   attackKey: 0
   attackPoint: {fileID: 0}
   attackRange: 0.5
   playerLayer:
     serializedVersion: 2
     m_Bits: 0
+  aState: 0
+  lState: 0
 --- !u!1 &800616148
 GameObject:
   m_ObjectHideFlags: 0
@@ -1327,7 +1327,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!58 &943094572
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1356,7 +1356,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14130412824ce2947beb34f44dbb233f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  digTime: 1.5
+  digTime: 3
   score: 0
   moveSpeed: 12
   isRed: 0
@@ -1369,14 +1369,14 @@ MonoBehaviour:
   left: 276
   dig: 303
   lightOn: 305
-  astate: 0
-  lstate: 0
   attackKey: 108
   attackPoint: {fileID: 915176085}
   attackRange: 0.5
   playerLayer:
     serializedVersion: 2
     m_Bits: 512
+  aState: 0
+  lState: 0
 --- !u!95 &943094574
 Animator:
   serializedVersion: 3

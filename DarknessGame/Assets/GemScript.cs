@@ -37,6 +37,7 @@ public class GemScript : MonoBehaviour
             if(onGemDug != null)
             {
                 onGemDug(redPlayer,pos.position, value);
+                Debug.Log("here3");
             }
             Destroy(this);
         }

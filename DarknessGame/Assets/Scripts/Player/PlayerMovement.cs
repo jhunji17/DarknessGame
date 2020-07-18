@@ -31,15 +31,11 @@ public class PlayerMovement : MonoBehaviour
     public float attackRange = 0.5f;
     public LayerMask playerLayer;
 
-    private enum actionState {idle, running, digging, attacking};
-    private enum lightState  {lit, dark};
-    public enum actionState {idle, running, digging};
+    public enum actionState {idle, running, digging, attacking};
     public enum lightState  {lit, dark};
 
-    private actionState aState = actionState.idle;
-    private lightState lState =  lightState.lit;
-    public actionState astate = actionState.idle;
-    public lightState lstate =  lightState.lit;
+    public actionState aState = actionState.idle;
+    public lightState lState =  lightState.lit;
     
     public static event Action<bool, Vector2> OnSuccessfulDig;
 
@@ -57,11 +53,13 @@ public class PlayerMovement : MonoBehaviour
 
 
     private void Update(){
-        checkpassdig();
+        
         HandleAttackBoxMovement();
+        checkpassdig();
         handleOther();
+        
         handleLighting();
-        HandleAnimation();
+     //   HandleAnimation();
     }
 
     private void handleMovement()
@@ -112,6 +110,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void handleOther(){
 
+        
+
         if (Input.GetKeyDown(lightOn))
         {
             if (lState == lightState.lit)
@@ -124,22 +124,27 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(dig) == true)
+        if (Input.GetKey(dig) == true && aState == actionState.idle)
         {
             aState = actionState.digging;
             PassDig = true;
             StartCoroutine(CheckCompletedDig(rb.position));
-        }
+            
+        } 
+        
 
         if (Input.GetKeyDown(attackKey))
         {
             aState = actionState.attacking;
             Attack();
-            if (Input.GetKeyUp(attackKey))
-            {
-                aState = actionState.idle;
-            }
+            // if (Input.GetKeyUp(attackKey))
+            // {
+            //     aState = actionState.idle;
+            // }
+            
         }
+        
+        
     }
 
     void Attack()
@@ -154,18 +159,17 @@ public class PlayerMovement : MonoBehaviour
 
     public void checkpassdig(){
         if(aState != actionState.digging || lState != lightState.lit){
-        
-        if(astate != actionState.digging || lstate != lightState.lit){
             PassDig = false;
         }
     }
 
     IEnumerator CheckCompletedDig(Vector2 startpos){
         yield return new WaitForSeconds(digTime);
-        aState = actionState.idle;
+        //aState = actionState.idle;
         if(PassDig){
             if(OnSuccessfulDig != null){
                 OnSuccessfulDig(isRed,rb.position);
+                aState = actionState.idle;
             }
         }
     }
@@ -180,30 +184,30 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawWireSphere(attackPoint.transform.position, attackRange);
     }
 
-    public void HandleAnimation()
-    {
-        if (aState == actionState.running)
-        {
-            animator.SetBool("isMoving", true);
-        }
+    // public void HandleAnimation()
+    // {
+    //     if (aState == actionState.running)
+    //     {
+    //         animator.SetBool("isMoving", true);
+    //     }
 
-        else if (aState == actionState.digging)
-        {
-            // need some sort of diggin animation here
-            // animator.SetTrigger("digging");
-        }
+    //     else if (aState == actionState.digging)
+    //     {
+    //         // need some sort of diggin animation here
+    //         // animator.SetTrigger("digging");
+    //     }
 
-        else if (aState == actionState.attacking)
-        {
-            animator.SetTrigger("attack");
-        }
+    //     else if (aState == actionState.attacking)
+    //     {
+    //         animator.SetTrigger("attack");
+    //     }
 
-        else
-        {
-            //should automatically return to idle
-            animator.SetBool("isMoving", false);
-        }      
-    }
+    //     else
+    //     {
+    //         //should automatically return to idle
+    //         animator.SetBool("isMoving", false);
+    //     }      
+    // }
 
     private void HandleAttackBoxMovement()
     {
