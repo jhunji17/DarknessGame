@@ -72,12 +72,20 @@ public class PlayerMovement : MonoBehaviour
             //fix this it shoudl be a straight addition  
             rb.position += (Vector2)transform.up * Time.deltaTime * moveSpeed;
             called = true;
+            if (Input.GetKey(down) || Input.GetKey(right) || Input.GetKey(left))
+            {
+                return;
+            }
         }
         if (Input.GetKey(down))
         {
             aState = actionState.running;
             rb.position -= (Vector2)transform.up * Time.deltaTime * moveSpeed;
             called = true;
+            if (Input.GetKey(up) || Input.GetKey(right) || Input.GetKey(left))
+            {
+                return;
+            }
         }
 
         if (Input.GetKey(right))
@@ -85,6 +93,10 @@ public class PlayerMovement : MonoBehaviour
             aState = actionState.running;
             rb.position += (Vector2)transform.right * Time.deltaTime * moveSpeed;
             called = true;
+            if (Input.GetKey(down) || Input.GetKey(up) || Input.GetKey(left))
+            {
+                return;
+            }
         }
 
         if (Input.GetKey(left))
@@ -92,6 +104,10 @@ public class PlayerMovement : MonoBehaviour
             aState = actionState.running;
             rb.position -= (Vector2)transform.right * Time.deltaTime * moveSpeed;
             called = true;
+            if (Input.GetKey(down) || Input.GetKey(right) || Input.GetKey(up))
+            {
+                return;
+            }
         }
 
         if (called == false)
