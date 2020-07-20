@@ -10,29 +10,21 @@ public class GemSpawn : MonoBehaviour
     public int initialNumberOfGems = 10;
     Vector2 spawnLocation;
 
-    private void onEnable(){
-        Debug.Log("here2");
+    private void OnEnable()
+    {
         GemScript.onGemDug += spawnNewGem;
-        
     }
-
     
-    
-
-
+    private void OnDisable()
+    {
+        GemScript.onGemDug -= spawnNewGem;
+    }
     public static float height;
     public static float width;
-    
-    
-    
-    
-
-    
-
     private void Start()
     {
-        height = Camera.main.orthographicSize - 2;
-        width = (height * Camera.main.aspect) - 2;
+        height = Camera.main.orthographicSize - 2f;
+        width = (height * Camera.main.aspect) - 2f;
         
         for (int i = 0; i < initialNumberOfGems; i++)
         {    
@@ -40,23 +32,23 @@ public class GemSpawn : MonoBehaviour
         }
     }
 
-    public void spawnNewGem(bool isRed, Vector2 pos, int value){
-        Debug.Log("here1");
-        if(height >= 3){
-            height -= 1;
+    private void spawnNewGem(bool isRed, Vector2 gemPos, int value){
+        if(height >= 3f){
+            height -= 0.5f;
         }
-        if(width >= 3){
-            width -= 1;
+        if(width >= 3f){
+            width -= 0.5f;
         }
         Instantiate(Gem, getSpawnLocation(), Quaternion.identity);
-
     }
 
     private Vector2 getSpawnLocation(){
         float RandomX = UnityEngine.Random.Range(-width, width);
         float RandomY = UnityEngine.Random.Range(-height, height);
-        return new Vector2(RandomX, RandomY);
+        Vector2 point = new Vector2(RandomX,RandomY);
+
+        if(LayerMask.)
+        return point;
             
     }
-
 }
