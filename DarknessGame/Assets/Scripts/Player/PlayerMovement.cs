@@ -39,6 +39,9 @@ public class PlayerMovement : MonoBehaviour
     
     public static event Action<bool, Vector2> OnSuccessfulDig;
 
+    public delegate void HaveBeenHit();
+    public static event HaveBeenHit youHaveBeenHit;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -58,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
         handleOther();
         
         handleLighting();
-        //animator.SetInteger("aState", (int)aState);
+        animator.SetInteger("aState", (int)aState);
     }
 
     private void handleMovement()
@@ -125,8 +128,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void handleOther(){
 
-        
-
         if (Input.GetKeyDown(lightOn))
         {
             if (lState == lightState.lit)
@@ -141,11 +142,9 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey(dig) == true && aState == actionState.idle)
         {
-            //Debug.Log("gOT HERE");
             aState = actionState.digging;
             PassDig = true;
-            StartCoroutine(CheckCompletedDig(rb.position));
-            
+            StartCoroutine(CheckCompletedDig(rb.position));          
         } 
         
 
@@ -153,6 +152,7 @@ public class PlayerMovement : MonoBehaviour
         {
             aState = actionState.attacking;
             animator.SetInteger("aState", (int)aState);
+            Debug.Log("ATTACK PRESSED");
             Attack();
         }
         
@@ -160,12 +160,12 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void Attack()
-    {    
+    {
         Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackRange, playerLayer);
-
         foreach (Collider2D enemy in hitPlayer)
         {
             Debug.Log(enemy.name + "GOT HIT");
+            youHaveBeenHit();           
         }
     }
 

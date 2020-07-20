@@ -46,8 +46,6 @@ public class GemSpawn : MonoBehaviour
         float RandomX = UnityEngine.Random.Range(-width, width);
         float RandomY = UnityEngine.Random.Range(-height, height);
         Vector2 point = new Vector2(RandomX,RandomY);
-
-        if(LayerMask.)
         return point;
             
     }
