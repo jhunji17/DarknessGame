@@ -4,11 +4,13 @@ using UnityEngine;
 using System;
 using UnityEngine.Experimental.Rendering.Universal;
 
+
 public class GemSpawn : MonoBehaviour
 {
     public GameObject Gem;
     public int initialNumberOfGems = 10;
     Vector2 spawnLocation;
+    public LayerMask walls;
 
     private void OnEnable()
     {
@@ -43,10 +45,16 @@ public class GemSpawn : MonoBehaviour
     }
 
     private Vector2 getSpawnLocation(){
-        float RandomX = UnityEngine.Random.Range(-width, width);
-        float RandomY = UnityEngine.Random.Range(-height, height);
-        Vector2 point = new Vector2(RandomX,RandomY);
-        return point;
-            
+        Debug.Log("here 2");
+        float rX = UnityEngine.Random.Range(-width, width);
+        float rY = UnityEngine.Random.Range(-height, height);
+        Vector2 point = new Vector2(rX,rY);
+        while((Physics2D.OverlapCircle(point,1.5f,walls))){
+            rX = UnityEngine.Random.Range(-width, width);
+            rY = UnityEngine.Random.Range(-height, height);
+            point = new Vector2(rX,rY);
+            Debug.Log("here 7");
+        }
+            return point;
     }
 }

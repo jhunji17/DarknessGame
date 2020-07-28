@@ -1796,7 +1796,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcaab9efd17f37a4aae7ca688bf0798f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testing: 1
+  testing: 0
   mylight: {fileID: 0}
 --- !u!114 &995980271
 MonoBehaviour:
@@ -1998,6 +1998,7 @@ PolygonCollider2D:
       - {x: 5.752377, y: 0.32258216}
       - {x: 5.3776217, y: 0.3601098}
       - {x: 5.4219284, y: -2.6194756}
+      - {x: 1.3676624, y: -2.6198204}
       - {x: -0.17999999, y: -2.62}
       - {x: -0.21, y: -2.6499999}
       - {x: -0.15408003, y: -2.9539661}
@@ -2121,7 +2122,7 @@ PolygonCollider2D:
       - {x: 1.51, y: 0.14999999}
       - {x: 1.67, y: 0.22}
       - {x: 1.78, y: 0.22999999}
-      - {x: 1.9, y: 0.29999998}
+      - {x: 1.9, y: 0.3826928}
       - {x: 1.9, y: 0.75}
       - {x: 1.88, y: 0.78}
       - {x: 1.79, y: 0.84}
@@ -3417,8 +3418,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.5
-  m_Color: {r: 0.8490566, g: 0.61445016, b: 0.1481844, a: 1}
+  m_FalloffIntensity: 0.39
+  m_Color: {r: 0.8490566, g: 0.689227, b: 0.028034903, a: 1}
   m_Intensity: 2
   m_LightVolumeOpacity: 0
   m_ApplyToSortingLayers: 0000000055fd8ebcc5b66cbe
@@ -3430,8 +3431,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensity: 0
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 1.7
-  m_PointLightOuterRadius: 2.3
+  m_PointLightInnerRadius: 1.56
+  m_PointLightOuterRadius: 2.38
   m_PointLightDistance: 3
   m_PointLightQuality: 1
   m_ShapeLightParametricSides: 5
@@ -3634,6 +3635,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Gem: {fileID: 1954889978080432267, guid: de874d1c0550b5e478e1db4dd790fed5, type: 3}
   initialNumberOfGems: 10
+  walls:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!4 &1966273117
 Transform:
   m_ObjectHideFlags: 0
