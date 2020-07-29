@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isRed;
     public bool PassDig = false;
     public Light2D light;
+    public float attackForce;
 
     public Animator animator;
 
@@ -165,7 +166,8 @@ public class PlayerMovement : MonoBehaviour
         foreach (Collider2D enemy in hitPlayer)
         {
             Debug.Log(enemy.name + "GOT HIT");
-            youHaveBeenHit();           
+            youHaveBeenHit();
+            AddForce(attackForce, enemy);
         }
     }
 
@@ -247,5 +249,18 @@ public class PlayerMovement : MonoBehaviour
             newPos = new Vector2(-1, 0);
             attackPoint.transform.localPosition = newPos;
         }
+    }
+
+    private void AddForce(float force, Collider2D enemy)
+    {
+        Rigidbody2D enemyRigidbody = enemy.attachedRigidbody;
+
+        var forceDirection = transform.position - enemy.transform.position;
+
+        forceDirection.Normalize();
+
+        enemyRigidbody.AddForce(-forceDirection*force);
+
+        Debug.Log("This should cause player to fly back");
     }
 }
