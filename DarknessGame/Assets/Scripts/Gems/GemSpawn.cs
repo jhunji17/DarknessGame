@@ -10,7 +10,9 @@ public class GemSpawn : MonoBehaviour
     public GameObject Gem;
     public int initialNumberOfGems = 10;
     Vector2 spawnLocation;
-    public LayerMask walls;
+    public Collider2D walls;
+    private int maxAttempts = 100;
+    
 
     private void OnEnable()
     {
@@ -25,12 +27,13 @@ public class GemSpawn : MonoBehaviour
     public static float width;
     private void Start()
     {
+        walls = GameObject.FindGameObjectWithTag("Wall").GetComponent<PolygonCollider2D>();
         height = Camera.main.orthographicSize - 2f;
         width = (height * Camera.main.aspect) - 2f;
         
         for (int i = 0; i < initialNumberOfGems; i++)
         {    
-            Instantiate(Gem, getSpawnLocation(), Quaternion.identity);   
+            Instantiate(Gem, getSpawnLocation(walls,width,height,maxAttempts), Quaternion.identity);   
         }
     }
 
@@ -41,20 +44,23 @@ public class GemSpawn : MonoBehaviour
         if(width >= 3f){
             width -= 0.5f;
         }
-        Instantiate(Gem, getSpawnLocation(), Quaternion.identity);
+        Instantiate(Gem, getSpawnLocation(walls,width,height,maxAttempts), Quaternion.identity);
     }
 
-    private Vector2 getSpawnLocation(){
-        Debug.Log("here 2");
-        float rX = UnityEngine.Random.Range(-width, width);
-        float rY = UnityEngine.Random.Range(-height, height);
-        Vector2 point = new Vector2(rX,rY);
-        while((Physics2D.OverlapCircle(point,1.5f,walls))){
-            rX = UnityEngine.Random.Range(-width, width);
-            rY = UnityEngine.Random.Range(-height, height);
-            point = new Vector2(rX,rY);
-            Debug.Log("here 7");
+    private Vector2 getSpawnLocation(Collider2D walls, float width, float height, int maxAttempts){
+        int attempts = 0;
+
+        do{
+            float x = UnityEngine.Random.Range(-width, width);
+            float y = UnityEngine.Random.Range(-height, height);
+            Vector2 result = new Vector2(x, y);
+            attempts++;
+
+            if (!walls.OverlapPoint(result)) return result;
         }
-            return point;
+        while (attempts < maxAttempts);
+
+        return Vector2.zero;
     }
+        
 }
