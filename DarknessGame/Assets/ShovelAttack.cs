@@ -18,12 +18,12 @@ public class ShovelAttack : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerMovement.youHaveBeenHit += destroyThisShovel;
+        PlayerMovement.somethingGotHit += destroyThisShovel;
     }
 
     private void OnDisable()
     {
-        PlayerMovement.youHaveBeenHit -= destroyThisShovel;
+        PlayerMovement.somethingGotHit -= destroyThisShovel;
     }
 
     public void Start()
@@ -87,7 +87,6 @@ public class ShovelAttack : MonoBehaviour
     public void destroyThisShovel()
     {
         // wait for some seconds / play an animation
-        Debug.Log("This has been called");
         Destroy(shovel);
         Destroy(this);
     }

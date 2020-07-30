@@ -3243,6 +3243,7 @@ MonoBehaviour:
   PassDig: 0
   light: {fileID: 1625155064}
   attackForce: 200
+  enemyNameRed: red
   animator: {fileID: 1812610281}
   up: 273
   down: 274
@@ -3368,12 +3369,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1812610280}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2ee51c7e45bfede4ab26f30249e83c7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
+  rb: {fileID: 1812610283}
   maxMoveDistance: 0
   immunityTime: 0
 --- !u!1 &1822379061
@@ -3652,9 +3653,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Gem: {fileID: 1954889978080432267, guid: de874d1c0550b5e478e1db4dd790fed5, type: 3}
   initialNumberOfGems: 10
-  walls:
-    serializedVersion: 2
-    m_Bits: 0
+  walls: {fileID: 0}
 --- !u!4 &1966273117
 Transform:
   m_ObjectHideFlags: 0
@@ -3709,6 +3708,7 @@ MonoBehaviour:
   PassDig: 0
   light: {fileID: 1822379064}
   attackForce: 0
+  enemyNameRed: red
   animator: {fileID: 0}
   up: 119
   down: 115
@@ -3838,8 +3838,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ee51c7e45bfede4ab26f30249e83c7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  maxMoveDistance: 2
+  rb: {fileID: 2013298495}
+  maxMoveDistance: 5
   immunityTime: 0
 --- !u!1 &2077688716
 GameObject:

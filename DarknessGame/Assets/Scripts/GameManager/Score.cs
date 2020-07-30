@@ -14,11 +14,13 @@ public class Score : MonoBehaviour
     private void OnEnable()
     {
         GemScript.onGemDug += scored;
+        OnHit.onLosingGems += loseScore;
     }
 
     private void OnDisable()
     {
         GemScript.onGemDug -= scored;
+        OnHit.onLosingGems += loseScore;
     }
 
     // Start is called before the first frame update
@@ -40,7 +42,20 @@ public class Score : MonoBehaviour
             score += value;
             scoreText.text = "Bluescore: " + score;
         }
+    }
 
+    private void loseScore(bool isRed)
+    {
+        if (redPlayer && isRed)
+        {
+            score -= 1;
+            scoreText.text = "Redscore: " + score;
+        }
 
+        if (!redPlayer && !isRed)
+        {
+            score -= 1;
+            scoreText.text = "Bluescore: " + score;
+        }
     }
 }

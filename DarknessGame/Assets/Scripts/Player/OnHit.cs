@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class OnHit : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class OnHit : MonoBehaviour
 
     public float maxMoveDistance;
     public float immunityTime;
+
+    public static event Action<bool> onLosingGems;
 
     private void OnEnable()
     {
@@ -34,29 +37,38 @@ public class OnHit : MonoBehaviour
         }
 
         newPos = transform.position;
-        Debug.Log(newPos);
-        Debug.Log(oldPos);
+        
+        Debug.Log("Old position : " + oldPos);
+
+        if (stunned == true)
+        {
+            Debug.Log("New position : " + newPos);
+            MovingWhileStunned();
+        }
         
     }
-    private void LoseGems()
+    private void LoseGems(bool red)
     {
-        // implement losing gems in score as well as them spawning around the player in a circle
+        // implement them spawning around the player in a circle
+
+        onLosingGems(red);
+
+        Debug.Log("LoseGems got called");
     }
 
-    private void Stun()
+    private void Stun(bool red)
     {
-        stunned = true;
-        if( DistanceCalculator(oldPos, newPos) >= maxMoveDistance)
+        Debug.Log("Stun got called");
+        stunned = true;     
+    }
+
+    private void MovingWhileStunned()
+    {
+        if (Vector2.Distance(newPos, oldPos) >= maxMoveDistance)
         {
             rb.velocity = Vector2.zero;
             stunned = false;
+            Debug.Log("got here somehow");
         }
-    }
-
-    private float DistanceCalculator(Vector2 startPos, Vector2 endPos)
-    {
-        float distance = Vector2.Distance(endPos, startPos);
-        Debug.Log(distance);
-        return distance;
     }
 }
