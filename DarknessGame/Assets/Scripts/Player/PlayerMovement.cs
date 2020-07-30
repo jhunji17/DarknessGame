@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     public bool PassDig = false;
     public Light2D light;
     public float attackForce;
+    public string enemyNameRed = "red";
 
     public Animator animator;
 
@@ -39,10 +40,10 @@ public class PlayerMovement : MonoBehaviour
     public lightState lState =  lightState.lit;
     
     public static event Action<bool, Vector2> OnSuccessfulDig;
+    public static event Action<bool> youHaveBeenHit;
 
-    public delegate void HaveBeenHit();
-    public static event HaveBeenHit youHaveBeenHit;
-
+    public delegate void HitEvent();
+    public static event HitEvent somethingGotHit;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -165,8 +166,19 @@ public class PlayerMovement : MonoBehaviour
         Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackRange, playerLayer);
         foreach (Collider2D enemy in hitPlayer)
         {
+            somethingGotHit();
             Debug.Log(enemy.name + "GOT HIT");
-            youHaveBeenHit();
+            if(youHaveBeenHit != null)
+            {
+                if (enemy.name == enemyNameRed)
+                {
+                    youHaveBeenHit(true);
+                }
+                else
+                {
+                    youHaveBeenHit(false);
+                }
+            }
             AddForce(attackForce, enemy);
         }
     }
@@ -182,8 +194,7 @@ public class PlayerMovement : MonoBehaviour
         if(PassDig && aState == actionState.digging && rb.position == startpos){
             aState = actionState.idle;
             if (OnSuccessfulDig != null){
-                OnSuccessfulDig(isRed,rb.position);
-                
+                OnSuccessfulDig(isRed,rb.position);               
             }
         }
     }
@@ -261,6 +272,5 @@ public class PlayerMovement : MonoBehaviour
 
         enemyRigidbody.AddForce(-forceDirection*force);
 
-        Debug.Log("This should cause player to fly back");
     }
 }
