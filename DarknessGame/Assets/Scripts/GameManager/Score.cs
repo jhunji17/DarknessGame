@@ -28,6 +28,7 @@ public class Score : MonoBehaviour
     private void Start()
     {
         scoreText = GetComponent<Text>();
+        score = 10;
     }
     
 
