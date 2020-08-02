@@ -6,15 +6,14 @@ using System;
 public class OnHit : MonoBehaviour
 {
 
-    private bool stunned = false;
-    private Vector2 oldPos;
-    private Vector2 newPos;
+    public bool stunned = false;
     public Rigidbody2D rb;
 
-    public float maxMoveDistance;
+    public float stunTime;
     public float immunityTime;
 
     public static event Action<bool> onLosingGems;
+
 
     private void OnEnable()
     {
@@ -31,19 +30,10 @@ public class OnHit : MonoBehaviour
 
     private void Update()
     {
-        if (stunned == false)
-        {
-            oldPos = transform.position;
-        }
-
-        newPos = transform.position;
-        
-        Debug.Log("Old position : " + oldPos);
-
+        Debug.Log(stunned);
         if (stunned == true)
         {
-            Debug.Log("New position : " + newPos);
-            MovingWhileStunned();
+            StartCoroutine(StunTime());
         }
         
     }
@@ -58,17 +48,16 @@ public class OnHit : MonoBehaviour
 
     private void Stun(bool red)
     {
-        Debug.Log("Stun got called");
+        Debug.Log("This has been called ");
         stunned = true;     
     }
 
-    private void MovingWhileStunned()
+    IEnumerator StunTime()
     {
-        if (Vector2.Distance(newPos, oldPos) >= maxMoveDistance)
-        {
-            rb.velocity = Vector2.zero;
-            stunned = false;
-            Debug.Log("got here somehow");
-        }
+        Debug.Log("Got here1");
+        yield return new WaitForSeconds(stunTime);
+        stunned = false;
+        rb.velocity = Vector2.zero;
+        Debug.Log(rb.velocity);
     }
 }
