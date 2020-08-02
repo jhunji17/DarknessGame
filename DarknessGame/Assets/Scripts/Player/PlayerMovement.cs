@@ -20,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
 
     public Animator animator;
 
+    private OnHit playerHit;
+
 
     [SerializeField] public KeyCode up;
     [SerializeField] public KeyCode down;
@@ -41,12 +43,12 @@ public class PlayerMovement : MonoBehaviour
     
     public static event Action<bool, Vector2> OnSuccessfulDig;
     public static event Action<bool> youHaveBeenHit;
+    public static event Action<bool> shovelBreaker;
 
-    public delegate void HitEvent();
-    public static event HitEvent somethingGotHit;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        playerHit = GetComponentInParent<OnHit>();
         height = Camera.main.orthographicSize;
         width = height * Camera.main.aspect;
     }
@@ -68,6 +70,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void handleMovement()
     {
+        if (playerHit.stunned == true)
+        {
+            return;
+        }
         bool called = false;
 
         if (Input.GetKey(up))
@@ -163,22 +169,44 @@ public class PlayerMovement : MonoBehaviour
 
     void Attack()
     {
+        ShovelAttack canAttack;
+
+        canAttack = GetComponentInChildren<ShovelAttack>();
+
+        Debug.Log(canAttack);
+        Debug.Log(canAttack.noShovel);
+
+        if (canAttack.noShovel == true && canAttack != null)
+        {
+            return;
+        }
+
         Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackRange, playerLayer);
         foreach (Collider2D enemy in hitPlayer)
         {
-            somethingGotHit();
+            OnHit enemyStunned;
+            
+
+            
+
+            if (shovelBreaker!= null)
+            {
+                shovelBreaker(isRed);
+            }
+            
+            enemyStunned = enemy.GetComponent<OnHit>();
+
+            if (enemyStunned.stunned == true)
+            {
+                return;
+            }
+
             Debug.Log(enemy.name + "GOT HIT");
             if(youHaveBeenHit != null)
             {
-                if (enemy.name == enemyNameRed)
-                {
-                    youHaveBeenHit(true);
-                }
-                else
-                {
-                    youHaveBeenHit(false);
-                }
+                youHaveBeenHit(isRed);
             }
+
             AddForce(attackForce, enemy);
         }
     }

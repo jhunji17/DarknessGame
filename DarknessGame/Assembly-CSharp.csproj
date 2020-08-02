@@ -73,8 +73,9 @@
     <Compile Include="Assets\Scripts\Gems\GemSpawn.cs" />
     <Compile Include="Assets\Scripts\Player\OnHit.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\Player\ShovelAttack.cs" />
+    <Compile Include="Assets\Scripts\Player\ShovelRespawner.cs" />
     <Compile Include="Assets\Scripts\Player\goToPlayer.cs" />
-    <Compile Include="Assets\ShovelAttack.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.0f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
