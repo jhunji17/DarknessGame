@@ -5,13 +5,19 @@ using System;
 
 public class GemScript : MonoBehaviour
 {
-    private int value = 1;
+
+
+
+    private int value ;
     private Transform pos;
     private SpriteRenderer sprite;
 
 
     public static event Action<bool, Vector2, int> onGemDug;
 
+     public void Initialize(int x){
+        value = x;
+    }
 
     void Start()
     {       
@@ -37,7 +43,7 @@ public class GemScript : MonoBehaviour
             if(onGemDug != null)
             {
                 onGemDug(redPlayer,pos.position, value);
-                Debug.Log("here3");
+                
             }
             Destroy(this);
         }

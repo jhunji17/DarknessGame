@@ -45,6 +45,8 @@ public class PlayerMovement : MonoBehaviour
     public static event Action<bool> youHaveBeenHit;
     public static event Action<bool> shovelBreaker;
 
+    public Stack<int> gems = new Stack<int>();
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();

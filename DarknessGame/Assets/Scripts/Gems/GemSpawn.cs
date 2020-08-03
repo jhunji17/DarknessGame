@@ -33,8 +33,10 @@ public class GemSpawn : MonoBehaviour
         
         for (int i = 0; i < initialNumberOfGems; i++)
         {    
-            Instantiate(Gem, getSpawnLocation(walls,width,height,maxAttempts), Quaternion.identity);   
+            GemScript myGem = UnityEngine.Object.Instantiate(Gem, getSpawnLocation(walls,width,height,maxAttempts), Quaternion.identity).GetComponent<GemScript>();   
+            myGem.Initialize(1);
         }
+
     }
 
     private void spawnNewGem(bool isRed, Vector2 gemPos, int value){
