@@ -227,7 +227,7 @@ GameObject:
   - component: {fileID: 132912765}
   m_Layer: 5
   m_Name: Text
-  m_TagString: Untagged
+  m_TagString: BlueScore
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1478,7 +1478,7 @@ GameObject:
   - component: {fileID: 922911095}
   m_Layer: 5
   m_Name: Text
-  m_TagString: Untagged
+  m_TagString: RedScore
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
