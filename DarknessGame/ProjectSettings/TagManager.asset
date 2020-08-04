@@ -8,6 +8,8 @@ TagManager:
   - Wall
   - Player2
   - Gem
+  - BlueScore
+  - RedScore
   layers:
   - Default
   - TransparentFX

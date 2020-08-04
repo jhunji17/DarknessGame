@@ -45,7 +45,17 @@ public class PlayerMovement : MonoBehaviour
     public static event Action<bool> youHaveBeenHit;
     public static event Action<bool> shovelBreaker;
 
-    public Stack<int> gems = new Stack<int>();
+    public Stack<float> gems = new Stack<float>();
+
+    private void OnEnable()
+    {
+        GemScript.onGemDug += updateScoreStack;
+    }
+
+    private void OnDisable()
+    {
+        GemScript.onGemDug += updateScoreStack;
+    }
 
     private void Start()
     {
@@ -187,9 +197,7 @@ public class PlayerMovement : MonoBehaviour
         foreach (Collider2D enemy in hitPlayer)
         {
             OnHit enemyStunned;
-            
 
-            
 
             if (shovelBreaker!= null)
             {
@@ -294,6 +302,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void AddForce(float force, Collider2D enemy)
     {
+
+        Debug.Log("the code is here");
+
         Rigidbody2D enemyRigidbody = enemy.attachedRigidbody;
 
         var forceDirection = transform.position - enemy.transform.position;
@@ -302,5 +313,18 @@ public class PlayerMovement : MonoBehaviour
 
         enemyRigidbody.AddForce(-forceDirection*force);
 
+    }
+
+    private void updateScoreStack(bool red, Vector2 pos, float value)
+    {
+        gems.Push(value);
+        if (red && isRed)
+        {
+            GameObject.FindGameObjectWithTag("RedScore").GetComponent<Score>().updateMe(value);
+        }
+        else if (!(isRed || red))
+        {
+            GameObject.FindGameObjectWithTag("BlueScore").GetComponent<Score>().updateMe(value);
+        }
     }
 }

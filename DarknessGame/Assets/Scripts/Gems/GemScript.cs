@@ -6,21 +6,20 @@ using System;
 public class GemScript : MonoBehaviour
 {
 
-
-
-    private int value ;
+    private float value;
     private Transform pos;
     private SpriteRenderer sprite;
 
 
-    public static event Action<bool, Vector2, int> onGemDug;
+    public static event Action<bool, Vector2, float> onGemDug;
 
-     public void Initialize(int x){
+    public void Initialize(float x)
+    {
         value = x;
     }
 
     void Start()
-    {       
+    {
         pos = GetComponent<Transform>();
         sprite = GetComponent<SpriteRenderer>();
     }
@@ -40,10 +39,10 @@ public class GemScript : MonoBehaviour
         if (Vector2.Distance(pos.position, playerPos) <= 1)
         {
             Destroy(sprite);
-            if(onGemDug != null)
+            if (onGemDug != null)
             {
-                onGemDug(redPlayer,pos.position, value);
-                
+                onGemDug(redPlayer, pos.position, value);
+
             }
             Destroy(this);
         }
