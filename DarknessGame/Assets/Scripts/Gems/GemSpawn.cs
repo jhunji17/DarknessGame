@@ -25,6 +25,7 @@ public class GemSpawn : MonoBehaviour
     }
     public static float height;
     public static float width;
+    public float gemValue;
     private void Start()
     {
         walls = GameObject.FindGameObjectWithTag("Wall").GetComponent<PolygonCollider2D>();
@@ -41,7 +42,7 @@ public class GemSpawn : MonoBehaviour
 
     private float getValue()
     {
-        return 0.5f;
+        return 1;
     }
 
     private void spawnNewGem(bool isRed, Vector2 gemPos, float value)

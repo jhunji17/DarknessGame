@@ -3284,7 +3284,7 @@ MonoBehaviour:
   PassDig: 0
   light: {fileID: 1625155064}
   attackForce: 200
-  enemyNameRed: red
+  stunTime: 2
   animator: {fileID: 1812610281}
   up: 273
   down: 274
@@ -3414,10 +3414,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ee51c7e45bfede4ab26f30249e83c7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stunned: 0
-  rb: {fileID: 1812610283}
-  stunTime: 1
-  immunityTime: 0
 --- !u!1 &1822379061
 GameObject:
   m_ObjectHideFlags: 0
@@ -3701,6 +3697,7 @@ MonoBehaviour:
   Gem: {fileID: 1954889978080432267, guid: de874d1c0550b5e478e1db4dd790fed5, type: 3}
   initialNumberOfGems: 10
   walls: {fileID: 0}
+  gemValue: 1
 --- !u!4 &1966273117
 Transform:
   m_ObjectHideFlags: 0
@@ -3756,7 +3753,7 @@ MonoBehaviour:
   PassDig: 0
   light: {fileID: 1822379064}
   attackForce: 200
-  enemyNameRed: red
+  stunTime: 2
   animator: {fileID: 2013298500}
   up: 119
   down: 115
@@ -3886,10 +3883,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ee51c7e45bfede4ab26f30249e83c7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stunned: 0
-  rb: {fileID: 2013298495}
-  stunTime: 1
-  immunityTime: 0
 --- !u!95 &2013298500
 Animator:
   serializedVersion: 3
