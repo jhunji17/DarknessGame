@@ -16,11 +16,14 @@ public class PlayerMovement : MonoBehaviour
     public bool PassDig = false;
     public Light2D light;
     public float attackForce;
-    public string enemyNameRed = "red";
+    //public string enemyNameRed = "red";
+    private int stunTime;
+    //public float immunityTime;
+
 
     public Animator animator;
 
-    private OnHit playerHit;
+    //private OnHit playerHit;
 
 
     [SerializeField] public KeyCode up;
@@ -35,14 +38,14 @@ public class PlayerMovement : MonoBehaviour
     public float attackRange = 0.5f;
     public LayerMask playerLayer;
 
-    public enum actionState {idle, running, digging, attacking};
+    public enum actionState {idle, running, digging, attacking, stunned};
     public enum lightState  {lit, dark};
 
     public actionState aState = actionState.idle;
     public lightState lState =  lightState.lit;
     
     public static event Action<bool, Vector2> OnSuccessfulDig;
-    public static event Action<bool> youHaveBeenHit;
+    public static event Action<bool> OnPlayerHit;
     public static event Action<bool> shovelBreaker;
 
     public Stack<float> gems = new Stack<float>();
@@ -50,42 +53,60 @@ public class PlayerMovement : MonoBehaviour
     private void OnEnable()
     {
         GemScript.onGemDug += updateScoreStack;
+        OnPlayerHit += Stun;
     }
 
     private void OnDisable()
     {
-        GemScript.onGemDug += updateScoreStack;
+        GemScript.onGemDug -= updateScoreStack;
+        OnPlayerHit -= Stun;
+    }
+
+    private void Stun(bool player){
+        if(isRed == player){
+            aState = actionState.stunned;
+        }
+    }
+
+    IEnumerator StunTime()
+    {
+        yield return new WaitForSeconds(stunTime);
+        aState = actionState.idle;
+        rb.velocity = Vector2.zero;
+        Debug.Log(rb.velocity);
     }
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        playerHit = GetComponentInParent<OnHit>();
+        //playerHit = GetComponentInParent<OnHit>();
         height = Camera.main.orthographicSize;
         width = height * Camera.main.aspect;
+        stunTime = 3;
     }
 
     private void FixedUpdate()
     {      
-        handleMovement();       
+        if(aState != actionState.stunned){
+            handleMovement();       
+        }
     }
 
 
     private void Update(){   
         HandleAttackBoxMovement();
-        checkpassdig();
-        handleOther();
-        
-        handleLighting();
+        if(aState != actionState.stunned){
+            checkpassdig();
+            handleOther();
+            handleLighting();
+        } else {
+            StartCoroutine(StunTime());
+        }
         animator.SetInteger("aState", (int)aState);
     }
 
     private void handleMovement()
     {
-        if (playerHit.stunned == true)
-        {
-            return;
-        }
         bool called = false;
 
         if (Input.GetKey(up))
@@ -196,7 +217,7 @@ public class PlayerMovement : MonoBehaviour
         Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackRange, playerLayer);
         foreach (Collider2D enemy in hitPlayer)
         {
-            OnHit enemyStunned;
+            PlayerMovement otherPlayer;
 
 
             if (shovelBreaker!= null)
@@ -204,17 +225,17 @@ public class PlayerMovement : MonoBehaviour
                 shovelBreaker(isRed);
             }
             
-            enemyStunned = enemy.GetComponent<OnHit>();
+            otherPlayer = enemy.GetComponent<PlayerMovement>();
 
-            if (enemyStunned.stunned == true)
+            if (otherPlayer.aState == PlayerMovement.actionState.stunned)
             {
                 return;
             }
 
             Debug.Log(enemy.name + "GOT HIT");
-            if(youHaveBeenHit != null)
+            if(OnPlayerHit != null)
             {
-                youHaveBeenHit(isRed);
+                OnPlayerHit(!isRed);
             }
 
             AddForce(attackForce, enemy);
@@ -247,30 +268,6 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawWireSphere(attackPoint.transform.position, attackRange);
     }
 
-    // public void HandleAnimation()
-    // {
-    //     if (aState == actionState.running)
-    //     {
-    //         animator.SetBool("isMoving", true);
-    //     }
-
-    //     else if (aState == actionState.digging)
-    //     {
-    //         // need some sort of diggin animation here
-    //         // animator.SetTrigger("digging");
-    //     }
-
-    //     else if (aState == actionState.attacking)
-    //     {
-    //         animator.SetTrigger("attack");
-    //     }
-
-    //     else
-    //     {
-    //         //should automatically return to idle
-    //         animator.SetBool("isMoving", false);
-    //     }      
-    // }
 
     private void HandleAttackBoxMovement()
     {
@@ -303,7 +300,7 @@ public class PlayerMovement : MonoBehaviour
     private void AddForce(float force, Collider2D enemy)
     {
 
-        Debug.Log("the code is here");
+        
 
         Rigidbody2D enemyRigidbody = enemy.attachedRigidbody;
 
