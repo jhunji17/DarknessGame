@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     public Light2D light;
     public float attackForce;
     //public string enemyNameRed = "red";
-    private int stunTime;
+    public int stunTime;
     //public float immunityTime;
 
 
@@ -82,7 +82,6 @@ public class PlayerMovement : MonoBehaviour
         //playerHit = GetComponentInParent<OnHit>();
         height = Camera.main.orthographicSize;
         width = height * Camera.main.aspect;
-        stunTime = 3;
     }
 
     private void FixedUpdate()
@@ -103,6 +102,8 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(StunTime());
         }
         animator.SetInteger("aState", (int)aState);
+        Debug.Log(gameObject.name + " " + gems.Peek());
+        
     }
 
     private void handleMovement()
@@ -233,6 +234,10 @@ public class PlayerMovement : MonoBehaviour
             }
 
             Debug.Log(enemy.name + "GOT HIT");
+
+            otherPlayer.loseScoreStack();
+            gainScoreStack();
+
             if(OnPlayerHit != null)
             {
                 OnPlayerHit(!isRed);
@@ -315,6 +320,7 @@ public class PlayerMovement : MonoBehaviour
     private void updateScoreStack(bool red, Vector2 pos, float value)
     {
         gems.Push(value);
+
         if (red && isRed)
         {
             GameObject.FindGameObjectWithTag("RedScore").GetComponent<Score>().updateMe(value);
@@ -323,5 +329,36 @@ public class PlayerMovement : MonoBehaviour
         {
             GameObject.FindGameObjectWithTag("BlueScore").GetComponent<Score>().updateMe(value);
         }
+    }
+
+    // this is for the stack when you get hit
+
+    public static float gem1;
+    public static float gem2;
+    public void loseScoreStack()
+    {
+        if (gems.Count >= 2)
+        {
+            Debug.Log(gameObject.name + "LOSE SCORE STACK GOT CALLED");
+            gem1 = gems.Pop();
+            updateScoreStack(isRed, transform.position, -gem1);
+            gem2 = gems.Pop();
+            updateScoreStack(isRed, transform.position, -gem2);
+            Debug.Log("Gem2" + gem2);
+            Debug.Log("Gem1" + gem1);
+        }
+
+        else
+        {
+            gem1 = 0;
+            gem2 = 0;
+        }
+    }
+
+    public void gainScoreStack()
+    {
+        Debug.Log(gameObject.name + "GAIN SCORE STACK GOT CALLED");
+        updateScoreStack(isRed, transform.position, gem1);
+        updateScoreStack(isRed, transform.position, gem2);
     }
 }
