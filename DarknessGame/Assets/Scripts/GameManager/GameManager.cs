@@ -47,6 +47,12 @@ public class GameManager : MonoBehaviour
         {
             Application.Quit();
         }
+
+        // for testing gameover
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            GameOverMaker();
+        }
     }
 
     void SetPageState(PageState state)
