@@ -55,7 +55,8 @@ public class GemSpawn : MonoBehaviour
         {
             width -= 0.5f;
         }
-        Instantiate(Gem, getSpawnLocation(walls, width, height, maxAttempts), Quaternion.identity);
+        GemScript myGem = UnityEngine.Object.Instantiate(Gem, getSpawnLocation(walls, width, height, maxAttempts), Quaternion.identity).GetComponent<GemScript>();
+        myGem.Initialize(getValue());
     }
 
     private Vector2 getSpawnLocation(Collider2D walls, float width, float height, int maxAttempts)
