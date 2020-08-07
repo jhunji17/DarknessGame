@@ -65,7 +65,6 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Enemy\enemyAi.cs" />
     <Compile Include="Assets\Scripts\GameManager\GameManager.cs" />
-    <Compile Include="Assets\Scripts\GameManager\PlayGame.cs" />
     <Compile Include="Assets\Scripts\GameManager\Score.cs" />
     <Compile Include="Assets\Scripts\GameManager\StartPageManager.cs" />
     <Compile Include="Assets\Scripts\GameManager\Timer.cs" />

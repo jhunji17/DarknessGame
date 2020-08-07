@@ -1196,8 +1196,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 936457204}
-        m_MethodName: PlayGames
+      - m_Target: {fileID: 1612520584}
+        m_MethodName: LocalGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

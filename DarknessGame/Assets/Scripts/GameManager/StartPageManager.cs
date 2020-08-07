@@ -46,6 +46,7 @@ public class StartPageManager : MonoBehaviour
     public void LocalGame()
     {
         SceneManager.LoadScene(sceneName: "Game");
+        Time.timeScale = 1;
     }
 
     public void HowToPlayScreen()
@@ -56,6 +57,7 @@ public class StartPageManager : MonoBehaviour
     public void OnlineGame()
     {
         SetPageState(PageState.OnlineVersion);
+        Time.timeScale = 0;
     }
 
     public void ReturnToStartPage()
