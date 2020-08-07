@@ -9,9 +9,6 @@ public class enemyAi : MonoBehaviour
     [SerializeField] public PlayerMovement redTarget;
     [SerializeField] public PlayerMovement blueTarget;
 
-    
-    
-
     public float speed = 200f;
     public float nextWaypointDistance = 3f;
 
@@ -28,9 +25,7 @@ public class enemyAi : MonoBehaviour
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
         InvokeRepeating("UpdatePath", 0f, 0.5f);
-
-        
-        
+ 
     }
 
     void UpdatePath()
