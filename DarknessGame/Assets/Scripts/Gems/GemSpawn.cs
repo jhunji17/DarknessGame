@@ -12,6 +12,7 @@ public class GemSpawn : MonoBehaviour
     Vector2 spawnLocation;
     public Collider2D walls;
     private int maxAttempts = 100;
+    private float gemConcentration = 0.3f;
 
 
     private void OnEnable()
@@ -41,19 +42,24 @@ public class GemSpawn : MonoBehaviour
     }
 
     private float getValue()
-    {
-        return 1;
+    {   
+
+        float time = GameObject.FindGameObjectWithTag("TimerText").GetComponent<Timer>().currentTime;
+        float etime = 180f - time;
+        float mean = ((etime/time) * 9f);
+        return   (float) (Math.Round(NextGaussian(mean,1,0,10),0));
+         
     }
 
     private void spawnNewGem(bool isRed, Vector2 gemPos, float value)
     {
         if (height >= 3f)
         {
-            height -= 0.5f;
+            height -= gemConcentration;
         }
         if (width >= 3f)
         {
-            width -= 0.5f;
+            width -= gemConcentration;
         }
         GemScript myGem = UnityEngine.Object.Instantiate(Gem, getSpawnLocation(walls, width, height, maxAttempts), Quaternion.identity).GetComponent<GemScript>();
         myGem.Initialize(getValue());
@@ -76,5 +82,34 @@ public class GemSpawn : MonoBehaviour
 
         return Vector2.zero;
     }
+
+    public static float NextGaussian() {
+        float v1, v2, s;
+        do {
+            v1 = 2.0f * UnityEngine.Random.Range(0f,1f) - 1.0f;
+            v2 = 2.0f * UnityEngine.Random.Range(0f,1f) - 1.0f;
+            s = v1 * v1 + v2 * v2;
+        } while (s >= 1.0f || s == 0f);
+
+        s = Mathf.Sqrt((-2.0f * Mathf.Log(s)) / s);
+    
+        return v1 * s;
+    }
+
+    public static float NextGaussian(float mean, float standard_deviation)
+    {
+        return mean + NextGaussian() * standard_deviation;
+    }
+
+    
+    public static float NextGaussian (float mean, float standard_deviation, float min, float max) {
+    float x;
+    do {
+        x = NextGaussian(mean, standard_deviation);
+    } while (x < min || x > max);
+        
+        return x;
+    }
+    
 
 }

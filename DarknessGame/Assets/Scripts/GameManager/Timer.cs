@@ -8,7 +8,7 @@ public class Timer : MonoBehaviour
 {
     public Text text;
     // replace this with the actual thing
-    private float currentTime = 0f;
+    public float currentTime = 0f;
     private float startingTime = 180f;
     public delegate void GameOver();
     public static event GameOver GameOverEvent;
