@@ -694,7 +694,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 6.799988}
+  m_AnchoredPosition: {x: 0, y: 6.821106}
   m_SizeDelta: {x: 0, y: -13.642151}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &478048274
@@ -800,7 +800,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   redTarget: {fileID: 2013298494}
   blueTarget: {fileID: 1812610282}
-  speed: 2
+  speed: 5
   nextWaypointDistance: 3
 --- !u!50 &496830807
 Rigidbody2D:
@@ -925,7 +925,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 496830805}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.7, y: -4.39, z: 0}
+  m_LocalPosition: {x: -1.7, y: -4.4, z: 0}
   m_LocalScale: {x: 0.25880134, y: 0.36138222, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1827,7 +1827,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcaab9efd17f37a4aae7ca688bf0798f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testing: 1
+  testing: 0
   mylight: {fileID: 0}
 --- !u!114 &995980271
 MonoBehaviour:

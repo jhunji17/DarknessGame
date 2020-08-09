@@ -182,7 +182,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(dig) == true && aState == actionState.idle)
+        if (Input.GetKey(dig) == true && aState == actionState.idle && lState == lightState.lit)
         {
             aState = actionState.digging;
             PassDig = true;
