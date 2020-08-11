@@ -47,8 +47,13 @@ public class GemSpawn : MonoBehaviour
         float time = GameObject.FindGameObjectWithTag("TimerText").GetComponent<Timer>().currentTime;
         float etime = 180f - time;
         float mean = ((etime/time) * 9f);
-        return   (float) (Math.Round(NextGaussian(mean,1,0,10),0));
-         
+        float sd = ((time/180) * 1.3f);
+        float value =    (float) (Math.Round(NextGaussian(mean,sd,0,10),0));
+        if(value == 0){
+            return 1f;
+        } else {
+            return value;
+        }
     }
 
     private void spawnNewGem(bool isRed, Vector2 gemPos, float value)
