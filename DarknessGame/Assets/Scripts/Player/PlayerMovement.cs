@@ -68,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    IEnumerator StunTime()
+    public IEnumerator StunTime()
     {
         yield return new WaitForSeconds(stunTime);
         aState = actionState.idle;
@@ -228,12 +228,16 @@ public class PlayerMovement : MonoBehaviour
             
             otherPlayer = enemy.GetComponent<PlayerMovement>();
 
+            otherPlayer.lState = PlayerMovement.lightState.dark;
+
             if (otherPlayer.aState == PlayerMovement.actionState.stunned)
             {
                 return;
             }
-
+            
             Debug.Log(enemy.name + "GOT HIT");
+
+            
 
             //otherPlayer.loseScoreStack();
             //gainScoreStack();
@@ -244,6 +248,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 OnPlayerHit(!isRed);
             }
+
 
             AddForce(attackForce, enemy);
         }
@@ -306,8 +311,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void AddForce(float force, Collider2D enemy)
     {
-
-        
 
         Rigidbody2D enemyRigidbody = enemy.attachedRigidbody;
 
