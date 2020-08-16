@@ -800,8 +800,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   redTarget: {fileID: 2013298494}
   blueTarget: {fileID: 1812610282}
-  speed: 5
+  speed: 2
   nextWaypointDistance: 3
+  hitboxRange: 1
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 1536
+  jumpSpeed: 0.1
 --- !u!50 &496830807
 Rigidbody2D:
   serializedVersion: 4
@@ -1827,7 +1832,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcaab9efd17f37a4aae7ca688bf0798f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testing: 0
+  testing: 1
   mylight: {fileID: 0}
 --- !u!114 &995980271
 MonoBehaviour:

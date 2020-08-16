@@ -29,6 +29,12 @@ public class enemyAi : MonoBehaviour
     Seeker seeker;
     Rigidbody2D rb;
 
+    // stuff for attack
+    public float hitboxRange;
+    public LayerMask playerLayer;
+    private Vector2 previousZombiePosition;
+    public float jumpSpeed;
+
     public enum State {seeking,patrolling,attacking};
     private State state;
 
@@ -70,6 +76,7 @@ public class enemyAi : MonoBehaviour
             attack();
         } else {
             moveAlongPath();
+            previousZombiePosition = gameObject.transform.position;
         }
         
 
@@ -77,8 +84,44 @@ public class enemyAi : MonoBehaviour
 
     }
 
-    private void attack(){
+    private void attack()
+    {
+        // get zombie to jump, probably need to cancle pathing or somehting, idk
+
+        gameObject.transform.position = Vector2.Lerp(target, previousZombiePosition, jumpSpeed);
+
+        // get zombie to stun
+        Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(gameObject.transform.position, hitboxRange, playerLayer);
+        foreach (Collider2D player in hitPlayer)
+        {
+            PlayerMovement playerHit;
+
+            playerHit = player.GetComponent<PlayerMovement>();
+
+            // to stop the zombie from continuing to follow them once they are hit
+
+            playerHit.lState = PlayerMovement.lightState.dark;
+
+            if (playerHit.aState == PlayerMovement.actionState.stunned)
+            {
+                return;
+            }
+
+            // doing this cause calling Stun event is disgusting, you can try if you like idk how to do it
+
+            playerHit.aState = PlayerMovement.actionState.stunned;
+
+            playerHit.StartCoroutine(playerHit.StunTime());
+        }
+
         return;
+    }
+
+    // to show hit box
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(gameObject.transform.position, hitboxRange);
     }
 
     private Vector2 getRandomRoamingPos() {
