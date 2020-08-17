@@ -43,6 +43,7 @@ public class GemSpawn : MonoBehaviour
 
     private float getValue()
     {   
+        
 
         float time = GameObject.FindGameObjectWithTag("TimerText").GetComponent<Timer>().currentTime;
         float etime = 180f - time;
