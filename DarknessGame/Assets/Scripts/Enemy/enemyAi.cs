@@ -24,7 +24,7 @@ public class enemyAi : MonoBehaviour
     private Vector2 target;
     private bool targetIsPlayer;
 
-    private float attackRange = 2f;
+    public float attackRange = 2f;
 
     Seeker seeker;
     Rigidbody2D rb;
@@ -75,21 +75,23 @@ public class enemyAi : MonoBehaviour
             Debug.Log("ATTACK");
             attack();
         } else {
+            if(state == State.attacking)
+            {
+                return;
+            }
             moveAlongPath();
             previousZombiePosition = gameObject.transform.position;
         }
-        
-
-
-
     }
 
     private void attack()
     {
         // get zombie to jump, probably need to cancle pathing or somehting, idk
 
-        gameObject.transform.position = Vector2.Lerp(target, previousZombiePosition, jumpSpeed);
-
+        gameObject.transform.position = Vector2.Lerp(previousZombiePosition, target, jumpSpeed);
+        Debug.Log(gameObject.transform.position);
+        Debug.Log(target);
+        Debug.Log(previousZombiePosition);
         // get zombie to stun
         Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(gameObject.transform.position, hitboxRange, playerLayer);
         foreach (Collider2D player in hitPlayer)
@@ -112,6 +114,8 @@ public class enemyAi : MonoBehaviour
             playerHit.aState = PlayerMovement.actionState.stunned;
 
             playerHit.StartCoroutine(playerHit.StunTime());
+
+            state = State.seeking;
         }
 
         return;

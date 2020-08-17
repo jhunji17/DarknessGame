@@ -802,11 +802,12 @@ MonoBehaviour:
   blueTarget: {fileID: 1812610282}
   speed: 2
   nextWaypointDistance: 3
+  attackRange: 3
   hitboxRange: 1
   playerLayer:
     serializedVersion: 2
     m_Bits: 1536
-  jumpSpeed: 0.1
+  jumpSpeed: 0.5
 --- !u!50 &496830807
 Rigidbody2D:
   serializedVersion: 4
