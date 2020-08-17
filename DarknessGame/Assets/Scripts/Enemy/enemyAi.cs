@@ -24,10 +24,16 @@ public class enemyAi : MonoBehaviour
     private Vector2 target;
     private bool targetIsPlayer;
 
-    private float attackRange = 2f;
+    public float attackRange = 2f;
 
     Seeker seeker;
     Rigidbody2D rb;
+
+    // stuff for attack
+    public float hitboxRange;
+    public LayerMask playerLayer;
+    private Vector2 previousZombiePosition;
+    public float jumpSpeed;
 
     public enum State {seeking,patrolling,attacking};
     private State state;
@@ -69,16 +75,57 @@ public class enemyAi : MonoBehaviour
             Debug.Log("ATTACK");
             attack();
         } else {
+            if(state == State.attacking)
+            {
+                return;
+            }
             moveAlongPath();
+            previousZombiePosition = gameObject.transform.position;
         }
-        
-
-
-
     }
 
-    private void attack(){
+    private void attack()
+    {
+        // get zombie to jump, probably need to cancle pathing or somehting, idk
+
+        gameObject.transform.position = Vector2.Lerp(previousZombiePosition, target, jumpSpeed);
+        Debug.Log(gameObject.transform.position);
+        Debug.Log(target);
+        Debug.Log(previousZombiePosition);
+        // get zombie to stun
+        Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(gameObject.transform.position, hitboxRange, playerLayer);
+        foreach (Collider2D player in hitPlayer)
+        {
+            PlayerMovement playerHit;
+
+            playerHit = player.GetComponent<PlayerMovement>();
+
+            // to stop the zombie from continuing to follow them once they are hit
+
+            playerHit.lState = PlayerMovement.lightState.dark;
+
+            if (playerHit.aState == PlayerMovement.actionState.stunned)
+            {
+                return;
+            }
+
+            // doing this cause calling Stun event is disgusting, you can try if you like idk how to do it
+
+            playerHit.aState = PlayerMovement.actionState.stunned;
+
+            playerHit.StartCoroutine(playerHit.StunTime());
+
+            state = State.seeking;
+        }
+
         return;
+    }
+
+    // to show hit box
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(gameObject.transform.position, hitboxRange);
     }
 
     private Vector2 getRandomRoamingPos() {
