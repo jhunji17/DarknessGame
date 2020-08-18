@@ -90,6 +90,7 @@
     <Compile Include="Assets\Scripts\GameManager\turnOffOnGameStart.cs" />
     <Compile Include="Assets\Scripts\Gems\GemScript.cs" />
     <Compile Include="Assets\Scripts\Gems\GemSpawn.cs" />
+    <Compile Include="Assets\Scripts\Player\LightSourceRAYCAST.cs" />
     <Compile Include="Assets\Scripts\Player\OnHit.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\Player\ShovelAttack.cs" />

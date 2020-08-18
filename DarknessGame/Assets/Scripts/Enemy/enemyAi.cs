@@ -166,7 +166,9 @@ public class enemyAi : MonoBehaviour
     }
 
 
-    private void moveAlongPath(){
+    private void moveAlongPath()
+    {
+        Debug.Log("moveAlongPathCalled");
         if (path == null){
             return;
         }
