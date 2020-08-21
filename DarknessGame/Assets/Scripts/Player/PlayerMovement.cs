@@ -172,12 +172,21 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(lightOn))
         {
+            //  for the new raycast lights
+
+            MeshRenderer MR;
+            MR = GetComponentInChildren<MeshRenderer>();
+
+            
+
             if (lState == lightState.lit)
             {
+                MR.enabled = false;
                 lState = lightState.dark;
             }
             else
             {
+                MR.enabled = true;
                 lState = lightState.lit;
             }
         }
