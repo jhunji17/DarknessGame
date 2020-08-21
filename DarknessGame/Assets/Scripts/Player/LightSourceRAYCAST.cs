@@ -10,49 +10,41 @@ public class LightSourceRAYCAST : MonoBehaviour
     public GameObject wall;
     private Vector2 rayDirection1;
     private Vector2 rayDirection2;
+
     // for the actual 'light rays'
     public float lightRadius;
-    [Range(60, 360)] public int numberOfRays;
+    [Range(1,360)] public int numberOfRays;
 
+    //for the light box manipulation
+    public MeshFilter viewMeshFilter;
+    Mesh viewMesh;
+    public float cutaway;
+
+
+    private void Start()
+    {
+        viewMesh = new Mesh();
+        viewMesh.name = "View Mesh";
+        viewMeshFilter.mesh = viewMesh;
+
+    }
 
     private void Update()
     {
-        //DrawLight(lightRadius, walls, numberOfRays);
-        DrawTorch(lightRadius, numberOfRays);
+        DrawRays(lightRadius, numberOfRays);
         //DrawOneLine2D(lightRadius);
+        
     }
 
-    // this should draw the light rays going out from the point, sorta works, but issue is that this game is 2D not 3D
-    //public void DrawLight(float radius, LayerMask collision, int rayCount)
-    //{
-    //    float degreesBetweenRays = 360 / rayCount;
-    //    for (int i = 0; i < rayCount; i++)
-    //    {
-    //        rayDirection1 = DirectionFromAngle(degreesBetweenRays);
-    //        degreesBetweenRays += 360 / rayCount;
-
-    //        // this function should probaby return a ray, need to figure that out
-
-    //        Ray lightRay = new Ray(gameObject.transform.position, rayDirection1);
-
-    //        RaycastHit wallHit;
-
-    //        if (Physics.Raycast(lightRay, out wallHit, lightRadius))
-    //        {
-    //            Debug.DrawLine(lightRay.origin, wallHit.point, Color.red);
-    //        }
-    //        else
-    //        {
-    //            Debug.DrawLine(lightRay.origin, (Vector2)lightRay.origin + rayDirection1 * lightRadius, Color.green);
-    //        }
-
-    //    }
-
-    //}
 
     // this is the 2d version, preferred but hey, coding is f u n
-    public void DrawTorch(float radius, int rayCount)
+    public void DrawRays(float radius, int rayCount)
     {
+        // this is for the mesh creation
+
+        List<Vector2> lightPoints = new List<Vector2>();
+
+
         float degreesBetweenRays = 360 / rayCount;
         for (int i = 0; i < rayCount; i++)
         {
@@ -66,50 +58,87 @@ public class LightSourceRAYCAST : MonoBehaviour
 
             if (wallHit.collider != null && wallHit.collider.gameObject == wall)
             {
-                if (wallHit.collider.gameObject == wall)
-                {
-                    Debug.DrawLine(lightRay.origin, wallHit.point, Color.red);
-                }
-                
+                //Debug.DrawLine(lightRay.origin, wallHit.point, Color.green);
+                lightPoints.Add(wallHit.point + rayDirection2*cutaway);
             }
             else
             {
-                Debug.DrawLine(lightRay.origin, lightRay.origin + rayDirection2*radius, Color.green);
+                //Debug.DrawLine(lightRay.origin, lightRay.origin + rayDirection2*radius, Color.green);
+                lightPoints.Add(lightRay.origin + rayDirection2 * radius);
             }
+        }
 
-        }     
+        // S E B A S T I A N  L A G U E  I S  B A E 
+
+        // I lie I can't do this
+
+        int vertexCount = lightPoints.Count + 1;
+
+        Vector3[] verticies = new Vector3[vertexCount];
+
+        int[] triangles = new int[(vertexCount -  1) * 3];
+
+        verticies[0] = Vector2.zero;
+
+        for(int i =0; i<vertexCount - 1; i++)
+        {
+
+            verticies[i + 1] = transform.InverseTransformPoint(lightPoints[i]);
+
+            if (i < vertexCount - 2)
+            {
+                triangles[i * 3] = 0;
+                triangles[i * 3 + 1] = i + 1;
+                triangles[i * 3 + 2] = i + 2;
+            }
+            if (i == vertexCount - 2)
+            {
+                triangles[i * 3] = 0;
+                triangles[i * 3 + 1] = i + 1;
+                triangles[i * 3 + 2] = 1;
+            }
+        }
+
+        viewMesh.Clear();
+        viewMesh.vertices = verticies;
+        viewMesh.triangles = triangles;
+        viewMesh.RecalculateNormals();
+
     }
 
-    //// trying to get one ray to work
+    // one ray tester
 
-    //    public void DrawOneLine2D(float radius)
-    //    {
-    //        Ray2D lightRay = new Ray2D(transform.position, Vector2.right);
-    //        RaycastHit2D hitSomething = Physics2D.Raycast(transform.position, Vector2.right, radius);
-    //        if (hitSomething.collider != null)
-    //        {
-    //            if (hitSomething.collider.gameObject == wall)
-    //            {
-    //                Debug.DrawLine(lightRay.origin, hitSomething.point, Color.red);
-    //            }
-    //            else
-    //            {
-    //                Debug.DrawLine(lightRay.origin, lightRay.origin + Vector2.up * radius, Color.green);
-    //            }
-    //        }
-    //    }
+    public void DrawOneLine2D(float radius)
+    {
+        Ray2D lightRay = new Ray2D(transform.position, Vector2.right);
+        RaycastHit2D hitSomething = Physics2D.Raycast(transform.position, Vector2.right, radius, walls);
+        if (hitSomething.collider != null)
+        {
+            if (hitSomething.collider!= null && hitSomething.collider.gameObject == wall)
+            {
+                Debug.DrawLine(lightRay.origin, hitSomething.point, Color.red);
+            }
+            else
+            {
+                Debug.DrawLine(lightRay.origin, lightRay.origin + Vector2.right * radius, Color.green);
+            }
+        }
+    }
 
-    //// thanks to my BOI SEBASTIAN LAGUE for this
-
-    //public Vector2 DirectionFromAngle(float angleInDegrees)
-    //{
-    //    return new Vector2(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
-    //}
-
-    // thanks to mrs thakar for teaching me trig for this <3 <3 <3
 
     public Vector2 DirectionFromAngle2D(float angleInDegrees)
     {
         return new Vector2(Mathf.Cos(angleInDegrees * Mathf.Deg2Rad), Mathf.Sin(angleInDegrees * Mathf.Deg2Rad));
+    }
+
+    // need this to show some wall
+
+    public Vector2 LineExtender(Vector2 wallhitPoint)
+    {
+        var direction = wallhitPoint - (Vector2)transform.position;
+        direction = direction.normalized;
+        direction = direction*cutaway;
+        
+        return direction + wallhitPoint;
     }
 }
