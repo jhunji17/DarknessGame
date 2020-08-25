@@ -84,6 +84,7 @@
     <Compile Include="Assets\CodeMonkey\Utils\World_Sprite.cs" />
     <Compile Include="Assets\Scripts\Enemy\enemyAi.cs" />
     <Compile Include="Assets\Scripts\GameManager\GameManager.cs" />
+    <Compile Include="Assets\Scripts\GameManager\MaterialChanger.cs" />
     <Compile Include="Assets\Scripts\GameManager\Score.cs" />
     <Compile Include="Assets\Scripts\GameManager\StartPageManager.cs" />
     <Compile Include="Assets\Scripts\GameManager\Timer.cs" />
